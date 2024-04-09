@@ -9,3 +9,9 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias Jumpstart.Accounts.User
+
+%User{}
+|> User.registration_changeset(%{email: "user@example.com", password: "password1234"})
+|> Jumpstart.Repo.insert!()
