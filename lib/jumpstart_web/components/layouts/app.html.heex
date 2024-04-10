@@ -1,4 +1,16 @@
-<main>
-  <.flash_group flash={@flash} />
-  <%= @inner_content %>
-</main>
+<div>
+  <header>
+    nav header
+  </header>
+
+  <div class="grid [grid-template-columns:16rem_1fr] [grid-template-areas:'sidebar_main']">
+    <aside class="[grid-area:sidebar]">
+      sidebar
+    </aside>
+
+    <main class="[grid-area:main]">
+      <.flash_group flash={@flash} />
+      <%= @inner_content %>
+    </main>
+  </div>
+</div>
