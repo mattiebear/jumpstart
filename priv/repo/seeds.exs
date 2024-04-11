@@ -20,8 +20,8 @@ account =
 
 %User{}
 |> User.registration_changeset(%{
-  account_id: account.id,
   email: "user@example.com",
   password: "password1234"
 })
+|> Ecto.Changeset.put_assoc(:account, account)
 |> Repo.insert!()
