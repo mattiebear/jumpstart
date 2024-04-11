@@ -6,10 +6,34 @@
 
 @layer components {
   .nav-link {
-    @apply flex text-xl text-zinc-300 p-2 rounded-lg dark:hover:bg-zinc-800 items-center gap-x-2 transition-colors duration-100;
+    @apply flex text-xl text-zinc-300 p-2 rounded-lg dark:hover:bg-zinc-700 items-center gap-x-2 transition-colors duration-100;
   }
 
   .nav-icon {
     @apply h-6 w-6;
+  }
+
+  .nav-link.is-active {
+    @apply text-purple-500;
+  }
+
+  .nav-link-group {
+    @apply rounded-lg overflow-hidden transition-all;
+  }
+
+  .nav-link-group:not(.is-active) {
+    @apply h-[2.75rem];
+  }
+
+  .nav-link-group.is-active {
+    @apply dark:bg-zinc-800;
+  }
+
+  .nav-sub-link {
+    @apply flex text-lg text-zinc-300 px-2 py-1 rounded-md dark:hover:bg-zinc-700 items-center gap-x-2 transition-colors duration-100;
+  }
+
+  .nav-sub-icon {
+    @apply h-5 w-5;
   }
 }
