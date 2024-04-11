@@ -3,3 +3,13 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+
+@layer components {
+  .nav-link {
+    @apply flex text-xl text-zinc-300 p-2 rounded-lg dark:hover:bg-zinc-800 items-center gap-x-2 transition-colors duration-100;
+  }
+
+  .nav-icon {
+    @apply h-6 w-6;
+  }
+}

@@ -6,7 +6,7 @@
       <span class="text-yellow-300">START</span>
     </.link>
     <div class="flex-1" />
-    <button class="h-10 rounded-full dark:bg-zinc-700 hover:dark:bg-zinc-600 dark:text-zinc-300 flex px-4 items-center transition-color duration-75">
+    <button class="h-10 rounded-full dark:bg-zinc-700 hover:dark:bg-zinc-600 dark:text-zinc-300 flex px-4 items-center transition-colors duration-75">
       <span class="text-xl">Project 1</span>
       <.icon name="hero-clipboard" class="h-6 w-6 ml-2 text-purple-500" />
     </button>
@@ -16,7 +16,12 @@
 
   <div class="grid [grid-template-columns:16rem_1fr] [grid-template-areas:'sidebar_main']">
     <aside class="[grid-area:sidebar]">
-      sidebar
+      <div class="flex flex-col gap-y-4">
+        <.link href={~p"/"} class="nav-link">
+          <.icon name="hero-squares-2x2" class="nav-icon" />
+          <span>Dashboard</span>
+        </.link>
+      </div>
     </aside>
 
     <main class="[grid-area:main]">

@@ -13,9 +13,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        brand: "#FD4F00",
-      },
       fontFamily: {
         display: ['Outfit', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         body: ['Cabin', 'ui-sans-serif', 'system-ui', 'sans-serif'],
