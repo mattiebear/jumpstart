@@ -85,6 +85,7 @@ defmodule JumpstartWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import JumpstartWeb.CoreComponents
+      import JumpstartWeb.Components
       import JumpstartWeb.Gettext
 
       # Shortcut for generating JS commands
