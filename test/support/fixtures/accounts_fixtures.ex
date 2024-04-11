@@ -15,8 +15,13 @@ defmodule Jumpstart.AccountsFixtures do
   end
 
   def user_fixture(attrs \\ %{}) do
+    account = account_fixture()
+
     {:ok, user} =
       attrs
+      |> Enum.into(%{
+        account_id: account.id
+      })
       |> valid_user_attributes()
       |> Jumpstart.Accounts.register_user()
 
@@ -27,5 +32,19 @@ defmodule Jumpstart.AccountsFixtures do
     {:ok, captured_email} = fun.(&"[TOKEN]#{&1}[TOKEN]")
     [_, token | _] = String.split(captured_email.text_body, "[TOKEN]")
     token
+  end
+
+  @doc """
+  Generate a account.
+  """
+  def account_fixture(attrs \\ %{}) do
+    {:ok, account} =
+      attrs
+      |> Enum.into(%{
+        name: "some name"
+      })
+      |> Jumpstart.Accounts.create_account()
+
+    account
   end
 end

@@ -505,4 +505,11 @@ defmodule Jumpstart.AccountsTest do
       refute inspect(%User{password: "123456"}) =~ "password: \"123456\""
     end
   end
+
+  describe "accounts" do
+    test "create account" do
+      {:ok, account} = Accounts.create_account(%{name: "some name"})
+      assert account.name == "some name"
+    end
+  end
 end

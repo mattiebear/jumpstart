@@ -6,7 +6,7 @@ defmodule Jumpstart.Accounts do
   import Ecto.Query, warn: false
   alias Jumpstart.Repo
 
-  alias Jumpstart.Accounts.{User, UserToken, UserNotifier}
+  alias Jumpstart.Accounts.{Account, User, UserToken, UserNotifier}
 
   ## Database getters
 
@@ -75,6 +75,10 @@ defmodule Jumpstart.Accounts do
 
   """
   def register_user(attrs) do
+    {:ok, account} = create_account(%{name: "My Organization"})
+
+    attrs = Enum.into(attrs, %{account_id: account.id})
+
     %User{}
     |> User.registration_changeset(attrs)
     |> Repo.insert()
@@ -349,5 +353,20 @@ defmodule Jumpstart.Accounts do
       {:ok, %{user: user}} -> {:ok, user}
       {:error, :user, changeset, _} -> {:error, changeset}
     end
+  end
+
+  @doc """
+  Creates an account.
+
+  ## Examples
+
+      iex> create_account(%{name: "some name"})
+      {:ok, %Account{}}
+
+  """
+  def create_account(attrs) do
+    %Account{}
+    |> Account.changeset(attrs)
+    |> Repo.insert()
   end
 end

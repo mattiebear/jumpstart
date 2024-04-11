@@ -10,8 +10,18 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Jumpstart.Accounts.User
+alias Jumpstart.Accounts.{Account, User}
+alias Jumpstart.Repo
+
+account =
+  %Account{}
+  |> Account.changeset(%{name: "Example Account"})
+  |> Repo.insert!()
 
 %User{}
-|> User.registration_changeset(%{email: "user@example.com", password: "password1234"})
-|> Jumpstart.Repo.insert!()
+|> User.registration_changeset(%{
+  account_id: account.id,
+  email: "user@example.com",
+  password: "password1234"
+})
+|> Repo.insert!()

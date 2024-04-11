@@ -1,12 +1,15 @@
 defmodule Jumpstart.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Jumpstart.Accounts
 
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+
+    belongs_to :account, Accounts.Account
 
     timestamps(type: :utc_datetime)
   end
@@ -36,7 +39,7 @@ defmodule Jumpstart.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:account_id, :email, :password])
     |> validate_email(opts)
     |> validate_password(opts)
   end
