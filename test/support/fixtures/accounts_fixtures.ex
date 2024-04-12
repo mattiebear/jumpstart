@@ -15,8 +15,11 @@ defmodule Jumpstart.AccountsFixtures do
   end
 
   def user_fixture(attrs \\ %{}) do
+    account = account_fixture()
+
     {:ok, user} =
       attrs
+      |> Enum.into(%{account_id: account.id})
       |> valid_user_attributes()
       |> Jumpstart.Accounts.register_user()
 

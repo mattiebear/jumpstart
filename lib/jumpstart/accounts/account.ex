@@ -1,11 +1,12 @@
 defmodule Jumpstart.Accounts.Account do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Jumpstart.Accounts
+  alias Jumpstart.{Accounts, Projects}
 
   schema "accounts" do
     field :name, :string
 
+    has_many :projects, Projects.Project
     has_many :users, Accounts.User
 
     timestamps(type: :utc_datetime)

@@ -75,11 +75,13 @@ defmodule Jumpstart.Accounts do
 
   """
   def register_user(attrs) do
-    {:ok, account} = create_account(%{name: "My Organization"})
+    account_changeset =
+      %Account{}
+      |> Account.changeset(%{name: "My Organization"})
 
     %User{}
     |> User.registration_changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:account, account)
+    |> Ecto.Changeset.put_assoc(:account, account_changeset)
     |> Repo.insert()
   end
 
