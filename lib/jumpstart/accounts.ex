@@ -79,7 +79,7 @@ defmodule Jumpstart.Accounts do
   def register_user(attrs) do
     {:ok, account} = create_account(%{name: "My Organization"})
 
-    Projects.create_project_on_account(account.id, %{name: "New Project"})
+    Projects.create_project_on_account(account.id, %{name: "My Project"})
 
     %User{}
     |> User.registration_changeset(attrs)
