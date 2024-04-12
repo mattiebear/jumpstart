@@ -7,11 +7,10 @@
     </.link>
     <div class="flex-1" />
     <button class="h-10 rounded-full dark:bg-zinc-700 hover:dark:bg-zinc-600 dark:text-zinc-300 flex px-4 items-center transition-colors duration-75">
-      <span class="text-xl"><%= @active_project.name %></span>
+      <span class="text-xl"><%= @current_project.name %></span>
       <.icon name="hero-clipboard" class="h-6 w-6 ml-2 text-purple-500" />
     </button>
-    <!-- TODO: Add user email -->
-    <.avatar email="matthew.m.sells@gmail.com" />
+    <.avatar email={@current_user.email} />
   </header>
 
   <div class="grid [grid-template-columns:16rem_1fr] [grid-template-areas:'sidebar_main']">
