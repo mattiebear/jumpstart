@@ -11,11 +11,20 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Jumpstart.Accounts.{Account, User}
+alias Jumpstart.Projects.Project
 alias Jumpstart.Repo
 
 account =
   %Account{}
   |> Account.changeset(%{name: "Example Account"})
+  |> Repo.insert!()
+
+_project =
+  %Project{}
+  |> Project.changeset(%{
+    name: "My Project"
+  })
+  |> Ecto.Changeset.put_assoc(:account, account)
   |> Repo.insert!()
 
 %User{}
