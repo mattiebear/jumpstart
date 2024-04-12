@@ -1,7 +1,7 @@
 defmodule JumpstartWeb.Router do
   use JumpstartWeb, :router
 
-  import JumpstartWeb.UserAuth
+  import JumpstartWeb.Auth.UserAuth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -47,7 +47,7 @@ defmodule JumpstartWeb.Router do
     get "/", PageController, :home
 
     live_session :redirect_if_user_is_authenticated,
-      on_mount: [{JumpstartWeb.UserAuth, :redirect_if_user_is_authenticated}] do
+      on_mount: [{JumpstartWeb.Auth.UserAuth, :redirect_if_user_is_authenticated}] do
       live "/users/register", UserRegistrationLive, :new
       live "/users/log_in", UserLoginLive, :new
       live "/users/reset_password", UserForgotPasswordLive, :new
@@ -63,7 +63,7 @@ defmodule JumpstartWeb.Router do
     get "/dashboard", DashboardController, :index
 
     live_session :require_authenticated_user,
-      on_mount: [{JumpstartWeb.UserAuth, :ensure_authenticated}] do
+      on_mount: [{JumpstartWeb.Auth.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
@@ -75,7 +75,7 @@ defmodule JumpstartWeb.Router do
     delete "/users/log_out", UserSessionController, :delete
 
     live_session :current_user,
-      on_mount: [{JumpstartWeb.UserAuth, :mount_current_user}] do
+      on_mount: [{JumpstartWeb.Auth.UserAuth, :mount_current_user}] do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
     end

@@ -1,4 +1,4 @@
-defmodule JumpstartWeb.UserAuth do
+defmodule JumpstartWeb.Auth.UserAuth do
   use JumpstartWeb, :verified_routes
 
   import Plug.Conn
@@ -133,13 +133,13 @@ defmodule JumpstartWeb.UserAuth do
       defmodule JumpstartWeb.PageLive do
         use JumpstartWeb, :live_view
 
-        on_mount {JumpstartWeb.UserAuth, :mount_current_user}
+        on_mount {JumpstartWeb.Auth.UserAuth, :mount_current_user}
         ...
       end
 
   Or use the `live_session` of your router to invoke the on_mount callback:
 
-      live_session :authenticated, on_mount: [{JumpstartWeb.UserAuth, :ensure_authenticated}] do
+      live_session :authenticated, on_mount: [{JumpstartWeb.Auth.UserAuth, :ensure_authenticated}] do
         live "/profile", ProfileLive, :index
       end
   """

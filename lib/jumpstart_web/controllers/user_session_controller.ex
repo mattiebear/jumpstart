@@ -2,7 +2,7 @@ defmodule JumpstartWeb.UserSessionController do
   use JumpstartWeb, :controller
 
   alias Jumpstart.Accounts
-  alias JumpstartWeb.UserAuth
+  alias JumpstartWeb.Auth.UserAuth
 
   def create(conn, %{"_action" => "registered"} = params) do
     create(conn, params, "Account created successfully!")

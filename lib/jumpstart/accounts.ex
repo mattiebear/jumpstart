@@ -7,7 +7,7 @@ defmodule Jumpstart.Accounts do
   alias Jumpstart.Repo
 
   alias Jumpstart.Accounts.{Account, User, UserToken, UserNotifier}
-  alias Jumpstart.Projects.Project
+  alias Jumpstart.Projects
 
   ## Database getters
 
@@ -76,14 +76,13 @@ defmodule Jumpstart.Accounts do
 
   """
   def register_user(attrs) do
-    # TODO: Organize this better
-    account_changeset =
-      %Account{}
-      |> Account.changeset(%{name: "My Organization"})
+    {:ok, account} = create_account(%{name: "My Organization"})
+
+    Projects.create_project_on_account(account.id, %{name: "New Project"})
 
     %User{}
     |> User.registration_changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:account, account_changeset)
+    |> Ecto.Changeset.put_assoc(:account, account)
     |> Repo.insert()
   end
 

@@ -1,9 +1,9 @@
-defmodule JumpstartWeb.UserAuthTest do
+defmodule JumpstartWeb.Auth.UserAuthTest do
   use JumpstartWeb.ConnCase, async: true
 
   alias Phoenix.LiveView
   alias Jumpstart.Accounts
-  alias JumpstartWeb.UserAuth
+  alias JumpstartWeb.Auth.UserAuth
   import Jumpstart.AccountsFixtures
 
   @remember_me_cookie "_jumpstart_web_user_remember_me"
