@@ -63,7 +63,7 @@ defmodule Jumpstart.Accounts do
   ## User registration
 
   @doc """
-  Registers a user.
+  Registers a user to a new account.
 
   ## Examples
 
