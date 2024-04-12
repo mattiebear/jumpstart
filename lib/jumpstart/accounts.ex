@@ -7,6 +7,7 @@ defmodule Jumpstart.Accounts do
   alias Jumpstart.Repo
 
   alias Jumpstart.Accounts.{Account, User, UserToken, UserNotifier}
+  alias Jumpstart.Projects.Project
 
   ## Database getters
 
@@ -63,7 +64,7 @@ defmodule Jumpstart.Accounts do
   ## User registration
 
   @doc """
-  Registers a user to a new account.
+  Registers a user to a new account
 
   ## Examples
 
@@ -75,6 +76,7 @@ defmodule Jumpstart.Accounts do
 
   """
   def register_user(attrs) do
+    # TODO: Organize this better
     account_changeset =
       %Account{}
       |> Account.changeset(%{name: "My Organization"})
