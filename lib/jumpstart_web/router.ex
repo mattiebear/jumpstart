@@ -12,7 +12,7 @@ defmodule JumpstartWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
-    plug :fetch_project_state
+    plug :fetch_current_project
   end
 
   pipeline :api do

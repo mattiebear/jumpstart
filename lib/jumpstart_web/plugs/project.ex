@@ -1,7 +1,7 @@
 defmodule JumpstartWeb.Plugs.Project do
   import Plug.Conn
 
-  def fetch_project_state(conn, _opts) do
+  def fetch_current_project(conn, _opts) do
     case conn.assigns.current_user do
       nil -> conn
       _ -> fetch_projects(conn)
