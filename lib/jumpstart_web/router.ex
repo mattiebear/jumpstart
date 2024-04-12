@@ -2,6 +2,7 @@ defmodule JumpstartWeb.Router do
   use JumpstartWeb, :router
 
   import JumpstartWeb.Auth.UserAuth
+  import JumpstartWeb.Plugs.Project
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -11,6 +12,7 @@ defmodule JumpstartWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+    plug :fetch_project_state
   end
 
   pipeline :api do
@@ -42,7 +44,7 @@ defmodule JumpstartWeb.Router do
   ## Authentication routes
 
   scope "/", JumpstartWeb do
-    pipe_through [:browser, :put_blank_layout, :redirect_if_user_is_authenticated]
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     get "/", PageController, :home
 
@@ -79,9 +81,5 @@ defmodule JumpstartWeb.Router do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
     end
-  end
-
-  defp put_blank_layout(conn, _opts) do
-    assign(conn, :layout, {JumpstartWeb.Layouts, :blank})
   end
 end

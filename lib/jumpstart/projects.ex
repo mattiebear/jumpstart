@@ -34,4 +34,6 @@ defmodule Jumpstart.Projects do
     |> Project.changeset(attrs)
     |> Repo.insert()
   end
+
+  def get_project!(id), do: Repo.get!(Project, id)
 end

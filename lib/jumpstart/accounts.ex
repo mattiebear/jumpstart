@@ -75,6 +75,7 @@ defmodule Jumpstart.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
+  # TODO: Refactor this to use Ecto.Multi
   def register_user(attrs) do
     {:ok, account} = create_account(%{name: "My Organization"})
 
