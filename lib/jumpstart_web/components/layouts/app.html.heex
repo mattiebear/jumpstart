@@ -6,14 +6,35 @@
       <span class="text-yellow-300">START</span>
     </.link>
     <div class="flex-1" />
+
     <button class="h-10 rounded-full dark:bg-zinc-700 hover:dark:bg-zinc-600 dark:text-zinc-300 flex px-4 items-center transition-colors duration-75">
       <span class="text-xl"><%= @current_project.name %></span>
       <.icon name="hero-clipboard" class="h-6 w-6 ml-2 text-purple-500" />
     </button>
-    <.avatar email={@current_user.email} />
+
+    <div class="relative h-[3.75rem]" x-data="{open: false}">
+      <button @click="open = !open">
+        <.avatar email={@current_user.email} />
+      </button>
+
+      <div x-show="open" x-transition @click.outside="open = false" class="menu">
+        <ul class="flex flex-col gap-y-2">
+          <li>
+            <.link href={~p"/users/settings"} class="menu-link">
+              <.icon name="hero-cog-6-tooth" class="h-6 w-6 mr-2" /> Settings
+            </.link>
+          </li>
+          <li>
+            <.link href={~p"/users/log_out"} method="delete" class="menu-link">
+              <.icon name="hero-arrow-left-on-rectangle" class="h-6 w-6 mr-2" /> Log out
+            </.link>
+          </li>
+        </ul>
+      </div>
+    </div>
   </header>
 
-  <div class="grid [grid-template-columns:16rem_1fr] [grid-template-areas:'sidebar_main']">
+  <div class="grid [grid-template-columns:16rem_1fr] [grid-template-areas:'sidebar_main'] [grid-gap:1.5rem]">
     <aside class="[grid-area:sidebar]">
       <div class="flex flex-col gap-y-4">
         <div class="nav-link-group">
