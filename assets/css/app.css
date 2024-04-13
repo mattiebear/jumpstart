@@ -40,7 +40,7 @@
 
   /* Menu */
   .menu {
-    @apply bg-zinc-800 border-zinc-700 border-solid border rounded-xl w-[15rem] absolute right-0 shadow-lg p-3;
+    @apply bg-zinc-800 border-zinc-700 border-solid border rounded-xl w-[15rem] absolute right-0 shadow-lg p-3 top-[calc(100%_+_10px)];
   }
 
   .menu-link {

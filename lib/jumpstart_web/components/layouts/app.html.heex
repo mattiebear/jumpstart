@@ -6,12 +6,27 @@
       <span class="text-yellow-300">START</span>
     </.link>
     <div class="flex-1" />
+    <!-- Project menu -->
+    <div class="h-10 relative" x-data="{open: false}">
+      <button
+        @click="open = !open"
+        class="h-10 rounded-full dark:bg-zinc-700 hover:dark:bg-zinc-600 dark:text-zinc-300 flex px-4 items-center transition-colors duration-75"
+      >
+        <span class="text-xl"><%= @current_project.name %></span>
+        <.icon name="hero-clipboard" class="h-6 w-6 ml-2 text-purple-500" />
+      </button>
 
-    <button class="h-10 rounded-full dark:bg-zinc-700 hover:dark:bg-zinc-600 dark:text-zinc-300 flex px-4 items-center transition-colors duration-75">
-      <span class="text-xl"><%= @current_project.name %></span>
-      <.icon name="hero-clipboard" class="h-6 w-6 ml-2 text-purple-500" />
-    </button>
-
+      <div x-show="open" x-transition @click.outside="open = false" class="menu">
+        <ul class="flex flex-col gap-y-2">
+          <li>
+            <.link href="/projects/new" class="menu-link">
+              <.icon name="hero-plus" class="h-6 w-6 mr-2" /> New project
+            </.link>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- User profile menu -->
     <div class="relative h-[3.75rem]" x-data="{open: false}">
       <button @click="open = !open">
         <.avatar email={@current_user.email} />
