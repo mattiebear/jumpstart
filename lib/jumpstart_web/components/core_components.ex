@@ -104,6 +104,7 @@ defmodule JumpstartWeb.CoreComponents do
       <div
         id={@id}
         class="hidden bg-zinc-800 border-zinc-700 border-solid border rounded-xl w-[15rem] absolute right-0 shadow-lg p-3 top-[calc(100%_+_10px)]"
+        phx-click={hide("##{@id}")}
         phx-click-away={hide("##{@id}")}
       >
         <%= render_slot(@content) %>

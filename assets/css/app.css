@@ -5,6 +5,10 @@
 /* This file is for your main application CSS */
 
 @layer components {
+  body > div {
+    @apply h-full;
+  }
+
   /* Navigation */
   .nav-link {
     @apply flex text-xl text-zinc-300 p-2 rounded-lg dark:hover:bg-zinc-700 items-center gap-x-2 transition-colors duration-100;
