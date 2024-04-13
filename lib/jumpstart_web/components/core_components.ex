@@ -89,6 +89,29 @@ defmodule JumpstartWeb.CoreComponents do
     """
   end
 
+  attr :id, :string, required: true
+  attr :rest, :global
+  slot :trigger, required: true
+  slot :content, required: true
+
+  def menu(assigns) do
+    ~H"""
+    <div class="relative">
+      <button phx-click={show("##{@id}")} {@rest}>
+        <%= render_slot(@trigger) %>
+      </button>
+
+      <div
+        id={@id}
+        class="hidden bg-zinc-800 border-zinc-700 border-solid border rounded-xl w-[15rem] absolute right-0 shadow-lg p-3 top-[calc(100%_+_10px)]"
+        phx-click-away={hide("##{@id}")}
+      >
+        <%= render_slot(@content) %>
+      </div>
+    </div>
+    """
+  end
+
   @doc """
   Renders flash notices.
 
@@ -416,6 +439,7 @@ defmodule JumpstartWeb.CoreComponents do
     """
   end
 
+  @spec header(map()) :: Phoenix.LiveView.Rendered.t()
   @doc """
   Renders a header with title.
   """

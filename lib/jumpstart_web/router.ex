@@ -2,7 +2,6 @@ defmodule JumpstartWeb.Router do
   use JumpstartWeb, :router
 
   import JumpstartWeb.Auth.UserAuth
-  import JumpstartWeb.Plugs.Project
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -12,7 +11,6 @@ defmodule JumpstartWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
-    plug :fetch_current_project
   end
 
   pipeline :api do
@@ -62,12 +60,14 @@ defmodule JumpstartWeb.Router do
   scope "/", JumpstartWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    get "/dashboard", DashboardController, :index
-
     live_session :require_authenticated_user,
-      on_mount: [{JumpstartWeb.Auth.UserAuth, :ensure_authenticated}] do
+      on_mount: [
+        {JumpstartWeb.Auth.UserAuth, :ensure_authenticated},
+        {JumpstartWeb.Session.Project, :fetch_current_project}
+      ] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+      live "/dashboard", DashboardLive.Index, :index
     end
   end
 
