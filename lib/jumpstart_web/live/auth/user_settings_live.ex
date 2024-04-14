@@ -1,4 +1,4 @@
-defmodule JumpstartWeb.UserSettingsLive do
+defmodule JumpstartWeb.Auth.UserSettingsLive do
   use JumpstartWeb, :live_view
 
   alias Jumpstart.Accounts

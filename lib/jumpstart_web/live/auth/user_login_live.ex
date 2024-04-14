@@ -1,4 +1,4 @@
-defmodule JumpstartWeb.UserLoginLive do
+defmodule JumpstartWeb.Auth.UserLoginLive do
   use JumpstartWeb, :live_view
 
   def render(assigns) do

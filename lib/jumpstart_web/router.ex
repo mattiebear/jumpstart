@@ -48,10 +48,10 @@ defmodule JumpstartWeb.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{JumpstartWeb.Auth.UserAuth, :redirect_if_user_is_authenticated}] do
-      live "/users/register", UserRegistrationLive, :new
-      live "/users/log_in", UserLoginLive, :new
-      live "/users/reset_password", UserForgotPasswordLive, :new
-      live "/users/reset_password/:token", UserResetPasswordLive, :edit
+      live "/users/register", Auth.UserRegistrationLive, :new
+      live "/users/log_in", Auth.UserLoginLive, :new
+      live "/users/reset_password", Auth.UserForgotPasswordLive, :new
+      live "/users/reset_password/:token", Auth.UserResetPasswordLive, :edit
     end
 
     post "/users/log_in", UserSessionController, :create
@@ -65,8 +65,8 @@ defmodule JumpstartWeb.Router do
         {JumpstartWeb.Auth.UserAuth, :ensure_authenticated},
         {JumpstartWeb.Session.Project, :fetch_current_project}
       ] do
-      live "/users/settings", UserSettingsLive, :edit
-      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+      live "/users/settings", Auth.UserSettingsLive, :edit
+      live "/users/settings/confirm_email/:token", Auth.UserSettingsLive, :confirm_email
       live "/dashboard", DashboardLive.Index, :index
     end
   end
@@ -78,8 +78,8 @@ defmodule JumpstartWeb.Router do
 
     live_session :current_user,
       on_mount: [{JumpstartWeb.Auth.UserAuth, :mount_current_user}] do
-      live "/users/confirm/:token", UserConfirmationLive, :edit
-      live "/users/confirm", UserConfirmationInstructionsLive, :new
+      live "/users/confirm/:token", Auth.UserConfirmationLive, :edit
+      live "/users/confirm", Auth.UserConfirmationInstructionsLive, :new
     end
   end
 end

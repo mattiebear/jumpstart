@@ -1,4 +1,4 @@
-defmodule JumpstartWeb.UserResetPasswordLive do
+defmodule JumpstartWeb.Auth.UserResetPasswordLive do
   use JumpstartWeb, :live_view
 
   alias Jumpstart.Accounts
