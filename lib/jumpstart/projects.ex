@@ -36,4 +36,8 @@ defmodule Jumpstart.Projects do
   end
 
   def get_project!(id), do: Repo.get!(Project, id)
+
+  def change_project(%Project{} = project, attrs \\ %{}) do
+    Project.changeset(project, attrs)
+  end
 end

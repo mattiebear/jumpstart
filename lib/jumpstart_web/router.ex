@@ -63,7 +63,7 @@ defmodule JumpstartWeb.Router do
     live_session :require_authenticated_user,
       on_mount: [
         {JumpstartWeb.Auth.UserAuth, :ensure_authenticated},
-        {JumpstartWeb.Session.Project, :fetch_current_project}
+        {JumpstartWeb.Global.Project, :fetch_current_project}
       ] do
       live "/users/settings", Auth.UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", Auth.UserSettingsLive, :confirm_email
