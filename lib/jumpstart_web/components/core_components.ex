@@ -50,7 +50,11 @@ defmodule JumpstartWeb.CoreComponents do
       data-cancel={JS.exec(@on_cancel, "phx-remove")}
       class="relative z-50 hidden"
     >
-      <div id={"#{@id}-bg"} class="bg-zinc-50/90 fixed inset-0 transition-opacity" aria-hidden="true" />
+      <div
+        id={"#{@id}-bg"}
+        class="bg-zinc-800/60 fixed inset-0 transition-opacity"
+        aria-hidden="true"
+      />
       <div
         class="fixed inset-0 overflow-y-auto"
         aria-labelledby={"#{@id}-title"}
@@ -66,7 +70,7 @@ defmodule JumpstartWeb.CoreComponents do
               phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
               phx-key="escape"
               phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
-              class="shadow-zinc-700/10 ring-zinc-700/10 relative hidden rounded-2xl bg-white p-14 shadow-lg ring-1 transition"
+              class="shadow-zinc-700/10 ring-zinc-700/10 relative hidden border border-solid border-zinc-600 rounded-2xl bg-zinc-900 p-4 shadow-lg ring-1 transition"
             >
               <div class="absolute top-6 right-5">
                 <button
@@ -104,7 +108,6 @@ defmodule JumpstartWeb.CoreComponents do
       <div
         id={@id}
         class="hidden bg-zinc-800 border-zinc-700 border-solid border rounded-xl w-[15rem] absolute right-0 shadow-lg p-3 top-[calc(100%_+_10px)]"
-        phx-click={hide("##{@id}")}
         phx-click-away={hide("##{@id}")}
       >
         <%= render_slot(@content) %>

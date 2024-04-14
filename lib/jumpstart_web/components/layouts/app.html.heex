@@ -6,7 +6,7 @@
       <span class="text-yellow-300">START</span>
     </.link>
     <div class="flex-1" />
-    <!-- Project menu -->
+
     <.menu id="project-menu">
       <:trigger>
         <div class="h-10 rounded-full dark:bg-zinc-700 hover:dark:bg-zinc-600 dark:text-zinc-300 flex px-4 items-center transition-colors duration-75">
@@ -18,14 +18,17 @@
       <:content>
         <ul class="flex flex-col gap-y-2">
           <li>
-            <.link href="/projects/new" class="menu-link">
+            <button
+              class="menu-link w-full"
+              phx-click={show_modal("project-modal") |> hide("#project-menu")}
+            >
               <.icon name="hero-plus" class="h-6 w-6 mr-2" /> New project
-            </.link>
+            </button>
           </li>
         </ul>
       </:content>
     </.menu>
-    <!-- User profile menu -->
+
     <.menu id="user-menu">
       <:trigger>
         <.avatar email={@current_user.email} />
@@ -101,3 +104,7 @@
     </main>
   </div>
 </div>
+
+<.modal id="project-modal">
+  this is a test
+</.modal>
