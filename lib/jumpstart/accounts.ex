@@ -7,7 +7,7 @@ defmodule Jumpstart.Accounts do
   alias Jumpstart.Repo
 
   alias Jumpstart.Accounts.{Account, User, UserToken, UserNotifier}
-  alias Jumpstart.Projects
+  alias Jumpstart.{Projects, Translate}
 
   ## Database getters
 
@@ -80,6 +80,7 @@ defmodule Jumpstart.Accounts do
     {:ok, account} = create_account(%{name: "My Organization"})
 
     Projects.create_project_on_account(account.id, %{name: "My Project"})
+    Translate.create_settings_on_account(account.id)
 
     %User{}
     |> User.registration_changeset(attrs)

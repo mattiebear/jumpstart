@@ -10,7 +10,7 @@ defmodule JumpstartWeb.Global.ProjectForm do
     <div>
       <.header>
         Create new project
-        <:subtitle>Add a new project to group all of your features</:subtitle>
+        <:subtitle>Add a new project to group all of your work</:subtitle>
       </.header>
 
       <.simple_form
