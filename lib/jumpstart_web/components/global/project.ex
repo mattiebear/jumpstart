@@ -31,6 +31,6 @@ defmodule JumpstartWeb.Global.Project do
       |> assign(:current_project, project)
       |> redirect(to: ~p"/projects/#{project.id}/activate")
 
-    {:cont, assign(socket, :current_project, project)}
+    {:halt, assign(socket, :current_project, project)}
   end
 end
