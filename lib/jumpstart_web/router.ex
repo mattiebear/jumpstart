@@ -60,6 +60,8 @@ defmodule JumpstartWeb.Router do
   scope "/", JumpstartWeb do
     pipe_through [:browser, :require_authenticated_user]
 
+    get "/projects/:id/activate", ProjectController, :activate
+
     live_session :require_authenticated_user,
       on_mount: [
         {JumpstartWeb.Auth.UserAuth, :ensure_authenticated},

@@ -50,28 +50,24 @@ defmodule JumpstartWeb.Global.ProjectForm do
   end
 
   def handle_event("save", %{"project" => project_params}, socket) do
-    # case Projects.create_project_on_account(project_params) do
-    #   {:ok, post} ->
-    #     notify_parent({:saved, post})
+    account_id = socket.assigns.current_user.account_id
 
-    #     {:noreply,
-    #      socket
-    #      |> put_flash(:info, "Post created successfully")
-    #      |> push_patch(to: socket.assigns.patch)}
+    case Projects.create_project_on_account(account_id, project_params) do
+      {:ok, project} ->
+        notify_parent({:saved, project})
 
-    #   {:error, %Ecto.Changeset{} = changeset} ->
-    #     {:noreply, assign_form(socket, changeset)}
-    # end
-    {:noreply, socket}
+        {:noreply,
+         socket
+         |> put_flash(:info, "Project created successfully")}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign_form(socket, changeset)}
+    end
   end
-
-  # defp save_post(socket, :new, post_params) do
-
-  # end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
     assign(socket, :project_form, to_form(changeset))
   end
 
-  # defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 end

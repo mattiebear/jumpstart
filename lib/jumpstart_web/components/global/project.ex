@@ -1,15 +1,16 @@
 defmodule JumpstartWeb.Global.Project do
-  import Phoenix.Component
-  import Jumpstart.Projects
+  use JumpstartWeb, :verified_routes
 
-  alias Jumpstart.Projects.Project
+  import Phoenix.Component
+  import Phoenix.LiveView
+  import Jumpstart.Projects
 
   def on_mount(:fetch_current_project, _params, session, socket) do
     projects =
       list_projects_for_account(socket.assigns.current_user.account_id)
 
     current_project_id = session["current_project_id"]
-    current_project = Enum.find(projects, &(&1.id == current_project_id))
+    current_project = get_project(current_project_id)
 
     socket =
       socket
@@ -23,10 +24,13 @@ defmodule JumpstartWeb.Global.Project do
   end
 
   defp activate_default_project(socket, projects) do
-    # TODO: Save this in session
+    project = hd(projects)
 
-    first_project = hd(projects)
+    socket =
+      socket
+      |> assign(:current_project, project)
+      |> redirect(to: ~p"/projects/#{project.id}/activate")
 
-    {:cont, assign(socket, :current_project, first_project)}
+    {:cont, assign(socket, :current_project, project)}
   end
 end

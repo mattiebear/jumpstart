@@ -17,9 +17,17 @@
 
       <:content>
         <ul class="flex flex-col gap-y-2">
+          <%= for project <- @projects do %>
+            <li>
+              <.link href={~p"/projects/#{project}/activate"} class="menu-link">
+                <.icon name="hero-clipboard" class="h-6 w-6 mr-2" /> <%= project.name %>
+              </.link>
+            </li>
+          <% end %>
+
           <li>
             <button
-              class="menu-link w-full"
+              class="menu-link w-full text-green-300"
               phx-click={show_modal("project-modal") |> hide("#project-menu")}
             >
               <.icon name="hero-plus" class="h-6 w-6 mr-2" /> New project
@@ -106,5 +114,9 @@
 </div>
 
 <.modal id="project-modal">
-  <.live_component module={JumpstartWeb.Global.ProjectForm} id="project-form" />
+  <.live_component
+    module={JumpstartWeb.Global.ProjectForm}
+    id="project-form"
+    current_user={@current_user}
+  />
 </.modal>
