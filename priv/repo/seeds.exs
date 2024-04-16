@@ -20,7 +20,15 @@ account =
   |> Repo.insert!()
 
 Projects.create_project_on_account(account.id, %{name: "My Project"})
-Translate.create_settings_on_account(account.id)
+
+Translate.create_settings_on_account(account.id, %{
+  source_locale: "en",
+  locales: [
+    %{code: "en", name: "English"},
+    %{code: "es", name: "Spanish"},
+    %{code: "fr", name: "French"}
+  ]
+})
 
 %User{}
 |> User.registration_changeset(%{

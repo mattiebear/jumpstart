@@ -2,7 +2,7 @@ defmodule Jumpstart.Translate.Locale do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "locales" do
+  embedded_schema do
     field :code, :string
     field :name, :string
 

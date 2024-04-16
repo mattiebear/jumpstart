@@ -80,7 +80,15 @@ defmodule Jumpstart.Accounts do
     {:ok, account} = create_account(%{name: "My Organization"})
 
     Projects.create_project_on_account(account.id, %{name: "My Project"})
-    Translate.create_settings_on_account(account.id)
+
+    Translate.create_settings_on_account(account.id, %{
+      source_locale: "en",
+      locales: [
+        %Translate.Locale{code: "en", name: "English"},
+        %Translate.Locale{code: "es", name: "Spanish"},
+        %Translate.Locale{code: "fr", name: "French"}
+      ]
+    })
 
     %User{}
     |> User.registration_changeset(attrs)

@@ -15,7 +15,8 @@ defmodule Jumpstart.Translate.TranslateSettings do
   @doc false
   def changeset(translate_settings, attrs) do
     translate_settings
-    |> cast(attrs, [])
+    |> cast(attrs, [:source_locale])
+    |> cast_embed(:locales, required: true)
     |> validate_required([])
   end
 end

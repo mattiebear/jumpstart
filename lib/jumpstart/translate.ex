@@ -11,7 +11,7 @@ defmodule Jumpstart.Translate do
   def create_settings_on_account(account_id, attrs \\ %{}) do
     %TranslateSettings{account_id: account_id}
     |> TranslateSettings.changeset(attrs)
-    |> Ecto.Changeset.cast_assoc(:locales)
+    |> Ecto.Changeset.cast_embed(:locales)
     |> Repo.insert()
   end
 
