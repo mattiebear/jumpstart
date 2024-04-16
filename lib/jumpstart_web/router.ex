@@ -69,7 +69,10 @@ defmodule JumpstartWeb.Router do
       ] do
       live "/users/settings", Auth.UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", Auth.UserSettingsLive, :confirm_email
+
       live "/dashboard", DashboardLive.Index, :index
+
+      live "/translate/settings", Translate.SettingsLive, :edit
     end
   end
 
