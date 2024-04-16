@@ -17,4 +17,19 @@ defmodule Jumpstart.TranslateFixtures do
 
     translate_settings
   end
+
+  @doc """
+  Generate a locale.
+  """
+  def locale_fixture(attrs \\ %{}) do
+    {:ok, locale} =
+      attrs
+      |> Enum.into(%{
+        code: "some code",
+        name: "some name"
+      })
+      |> Jumpstart.Translate.create_locale()
+
+    locale
+  end
 end

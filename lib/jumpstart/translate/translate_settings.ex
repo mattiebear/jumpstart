@@ -3,7 +3,11 @@ defmodule Jumpstart.Translate.TranslateSettings do
   import Ecto.Changeset
 
   schema "translate_settings" do
+    field :source_locale, :string
+
     belongs_to :account, Jumpstart.Accounts.Account
+
+    embeds_many :locales, Jumpstart.Translate.Locale, on_replace: :delete
 
     timestamps(type: :utc_datetime)
   end
