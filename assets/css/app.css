@@ -38,6 +38,10 @@
     @apply flex text-lg text-zinc-300 px-2 py-1 rounded-md dark:hover:bg-zinc-700 items-center gap-x-2 transition-colors duration-100;
   }
 
+  .nav-sub-link.is-active {
+    @apply text-purple-500;
+  }
+
   .nav-sub-icon {
     @apply h-5 w-5;
   }

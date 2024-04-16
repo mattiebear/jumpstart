@@ -7,8 +7,10 @@ defmodule JumpstartWeb.DashboardLive.Index do
     {:ok, socket}
   end
 
-  def handle_params(_params, _url, socket) do
-    {:noreply, socket}
+  def handle_params(_params, url, socket) do
+    navigation = JumpstartWeb.Navigation.build_navigation(url)
+
+    {:noreply, assign(socket, :navigation, navigation)}
   end
 
   def handle_info({JumpstartWeb.Global.ProjectForm, {:saved, _project}}, socket) do

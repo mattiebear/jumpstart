@@ -62,49 +62,67 @@
   <div class="grid [grid-template-columns:16rem_1fr] [grid-template-areas:'sidebar_main'] [grid-gap:1.5rem]">
     <aside class="[grid-area:sidebar]">
       <div class="flex flex-col gap-y-4">
-        <div class="nav-link-group">
-          <.link href={~p"/"} class="nav-link">
+        <div class={"nav-link-group #{if @navigation.dashboard, do: "is-active"}"}>
+          <.link
+            navigate={~p"/dashboard"}
+            class={"nav-link #{if @navigation.dashboard, do: "is-active"}"}
+          >
             <.icon name="hero-squares-2x2" class="nav-icon" />
             <span>Dashboard</span>
           </.link>
         </div>
 
-        <div class="nav-link-group is-active">
-          <.link href={~p"/"} class="nav-link is-active">
+        <div class={"nav-link-group #{if @navigation.translate, do: "is-active"}"}>
+          <.link
+            navigate={~p"/translate"}
+            class={"nav-link #{if @navigation.translate_dashboard, do: "is-active"}"}
+          >
             <.icon name="hero-globe-alt" class="nav-icon" />
             <span>I18N</span>
           </.link>
 
           <div class="pl-4 pr-2 py-2">
-            <.link href={~p"/"} class="nav-sub-link">
+            <.link
+              href={~p"/"}
+              class={"nav-sub-link #{if @navigation.translate_translations, do: "is-active"}"}
+            >
               <.icon name="hero-chat-bubble-bottom-center-text" class="nav-sub-icon" />
               <span>Translations</span>
             </.link>
           </div>
 
           <div class="pl-4 pr-2 py-2">
-            <.link href={~p"/"} class="nav-sub-link">
+            <.link
+              href={~p"/"}
+              class={"nav-sub-link #{if @navigation.translate_users, do: "is-active"}"}
+            >
               <.icon name="hero-user-group" class="nav-sub-icon" />
               <span>Users</span>
             </.link>
           </div>
 
           <div class="pl-4 pr-2 py-2">
-            <.link navigate={~p"/translate/settings"} class="nav-sub-link">
+            <.link
+              navigate={~p"/translate/settings"}
+              class={"nav-sub-link #{if @navigation.translate_settings, do: "is-active"}"}
+            >
               <.icon name="hero-cog-6-tooth" class="nav-sub-icon" />
               <span>Settings</span>
             </.link>
           </div>
 
           <div class="pl-4 pr-2 py-2">
-            <.link href={~p"/"} class="nav-sub-link">
+            <.link
+              href={~p"/"}
+              class={"nav-sub-link #{if @navigation.translate_developer, do: "is-active"}"}
+            >
               <.icon name="hero-command-line" class="nav-sub-icon" />
               <span>Developer</span>
             </.link>
           </div>
         </div>
 
-        <div class="nav-link-group">
+        <div class={"nav-link-group #{if @navigation.account, do: "is-active"}"}>
           <.link href={~p"/"} class="nav-link">
             <.icon name="hero-bolt" class="nav-icon" />
             <span>Account</span>
