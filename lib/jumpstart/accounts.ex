@@ -82,7 +82,6 @@ defmodule Jumpstart.Accounts do
     Projects.create_project_on_account(account.id, %{name: "My Project"})
 
     Translate.create_settings_on_account(account.id, %{
-      source_locale: "en",
       locales: [
         %Translate.Locale{code: "en", name: "English"},
         %Translate.Locale{code: "es", name: "Spanish"},

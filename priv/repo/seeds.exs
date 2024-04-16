@@ -22,11 +22,10 @@ account =
 Projects.create_project_on_account(account.id, %{name: "My Project"})
 
 Translate.create_settings_on_account(account.id, %{
-  source_locale: "en",
   locales: [
-    %{code: "en", name: "English"},
-    %{code: "es", name: "Spanish"},
-    %{code: "fr", name: "French"}
+    %{code: "en", name: "English", role: "source"},
+    %{code: "es", name: "Spanish", role: "target"},
+    %{code: "fr", name: "French", role: "target"},
   ]
 })
 

@@ -3,11 +3,9 @@ defmodule Jumpstart.Translate.TranslateSettings do
   import Ecto.Changeset
 
   schema "translate_settings" do
-    field :source_locale, :string
-
     belongs_to :account, Jumpstart.Accounts.Account
 
-    embeds_many :locales, Jumpstart.Translate.Locale, on_replace: :delete
+    has_many :locales, Jumpstart.Translate.Locale
 
     timestamps(type: :utc_datetime)
   end
@@ -15,8 +13,8 @@ defmodule Jumpstart.Translate.TranslateSettings do
   @doc false
   def changeset(translate_settings, attrs) do
     translate_settings
-    |> cast(attrs, [:source_locale])
-    |> cast_embed(:locales, required: true)
+    |> cast(attrs, [])
+    |> cast_assoc(:locales, with: &Jumpstart.Translate.Locale.changeset/2)
     |> validate_required([])
   end
 end

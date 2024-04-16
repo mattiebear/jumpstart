@@ -60,6 +60,7 @@ defmodule JumpstartWeb.Router do
   scope "/", JumpstartWeb do
     pipe_through [:browser, :require_authenticated_user]
 
+    # TODO: Turn this into a POST instead?
     get "/projects/:id/activate", ProjectController, :activate
 
     live_session :require_authenticated_user,
