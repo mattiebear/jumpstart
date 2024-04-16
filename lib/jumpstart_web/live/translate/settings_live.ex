@@ -4,7 +4,7 @@ defmodule JumpstartWeb.Translate.SettingsLive do
   alias Jumpstart.Repo
 
   def mount(_params, _session, socket) do
-    current_user = Repo.preload(socket.assigns.current_user, account: :translate_settings)
+    current_user = Repo.preload(socket.assigns.current_user, account: [translate_settings: :locales])
 
     {:ok, assign(socket, :account, current_user.account)}
   end
