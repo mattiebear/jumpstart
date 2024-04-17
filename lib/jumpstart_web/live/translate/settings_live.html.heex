@@ -1,3 +1,44 @@
-<div class="container">
-  
+<div class="max-w-2xl mx-auto">
+  <.header>
+    Translate settings
+    <:subtitle>Configure the managed source and target locales</:subtitle>
+  </.header>
+
+  <.simple_form for={@form} phx-change="validate" phx-submit="save">
+    <fieldset class="flex flex-col gap-y-4 mb-2">
+      <.inputs_for :let={locale} field={@form[:locales]}>
+        <div class="dark:bg-zinc-800 px-4 py-3 rounded-xl flex gap-2">
+          <div>
+            <.input field={locale[:name]} label="Language" phx-debounce />
+          </div>
+
+          <div>
+            <.input field={locale[:code]} label="Locale Code" phx-debounce />
+          </div>
+
+          <div>
+            <.input
+              field={locale[:role]}
+              label="Role"
+              type="select"
+              options={[Source: "source", Target: "target"]}
+              phx-debounce
+            />
+          </div>
+        </div>
+      </.inputs_for>
+
+      <button
+        class="px-4 py-3 rounded-xl flex justify-center w-full border border-dashed border-purple-500 text-purple-500"
+        phx-click="add-locale"
+        type="button"
+      >
+        Add locale
+      </button>
+    </fieldset>
+
+    <:actions>
+      <.button type="submit" phx-disable-with="Saving...">Save settings</.button>
+    </:actions>
+  </.simple_form>
 </div>
