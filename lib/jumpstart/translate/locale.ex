@@ -5,6 +5,7 @@ defmodule Jumpstart.Translate.Locale do
   schema "locales" do
     field :code, :string
     field :name, :string
+    # TODO: Change to boolean
     field :role, Ecto.Enum, values: [target: 0, source: 1]
 
     belongs_to :translate_settings, Jumpstart.Translate.TranslateSettings

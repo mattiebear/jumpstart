@@ -109,4 +109,10 @@ defmodule Jumpstart.Translate do
   def change_locale(%Locale{} = locale, attrs \\ %{}) do
     Locale.changeset(locale, attrs)
   end
+
+  def update_translate_settings(%TranslateSettings{} = translate_settings, attrs) do
+    translate_settings
+    |> TranslateSettings.changeset(attrs)
+    |> Repo.update()
+  end
 end

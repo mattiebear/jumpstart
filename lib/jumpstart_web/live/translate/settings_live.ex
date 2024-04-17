@@ -1,4 +1,5 @@
 defmodule JumpstartWeb.Translate.SettingsLive do
+  alias Jumpstart.Translate
   alias Ecto.Changeset
   use JumpstartWeb, :live_view
 
@@ -12,7 +13,12 @@ defmodule JumpstartWeb.Translate.SettingsLive do
     settings = current_user.account.translate_settings
     form = TranslateSettings.changeset(settings, %{}) |> to_form()
 
-    {:ok, assign(socket, :form, form)}
+    socket =
+      socket
+      |> assign(:form, form)
+      |> assign(:settings, settings)
+
+    {:ok, socket}
   end
 
   def handle_params(_params, url, socket) do
@@ -35,10 +41,24 @@ defmodule JumpstartWeb.Translate.SettingsLive do
     socket =
       update(socket, :form, fn %{source: changeset} ->
         existing = Changeset.get_assoc(changeset, :locales)
-        changeset = Changeset.put_assoc(changeset, :locales, existing ++ [%Locale{}])
+        changeset = Changeset.put_assoc(changeset, :locales, existing ++ [%Locale{role: :target}])
         to_form(changeset)
       end)
 
     {:noreply, socket}
+  end
+
+  def handle_event("save", %{"translate_settings" => params}, socket) do
+    case Translate.update_translate_settings(
+           socket.assigns.settings,
+           params
+         ) do
+      {:ok, _} ->
+        {:noreply, put_flash(socket, :info, "Settings saved successfully.")}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        form = to_form(changeset)
+        {:noreply, assign(socket, form: form)}
+    end
   end
 end
