@@ -18,13 +18,7 @@
           </div>
 
           <div>
-            <.input
-              field={locale[:role]}
-              label="Role"
-              type="select"
-              options={[Source: "source", Target: "target"]}
-              phx-debounce
-            />
+            <.input field={locale[:source]} label="Source locale" type="checkbox" />
           </div>
         </div>
       </.inputs_for>

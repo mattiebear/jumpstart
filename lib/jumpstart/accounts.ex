@@ -83,9 +83,9 @@ defmodule Jumpstart.Accounts do
 
     Translate.create_settings_on_account(account.id, %{
       locales: [
-        %Translate.Locale{code: "en", name: "English"},
-        %Translate.Locale{code: "es", name: "Spanish"},
-        %Translate.Locale{code: "fr", name: "French"}
+        %Translate.Locale{code: "en", name: "English", source: true},
+        %Translate.Locale{code: "es", name: "Spanish", source: false},
+        %Translate.Locale{code: "fr", name: "French", source: false}
       ]
     })
 

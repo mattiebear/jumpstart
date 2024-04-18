@@ -41,7 +41,7 @@ defmodule JumpstartWeb.Translate.SettingsLive do
     socket =
       update(socket, :form, fn %{source: changeset} ->
         existing = Changeset.get_assoc(changeset, :locales)
-        changeset = Changeset.put_assoc(changeset, :locales, existing ++ [%Locale{role: :target}])
+        changeset = Changeset.put_assoc(changeset, :locales, existing ++ [%Locale{}])
         to_form(changeset)
       end)
 

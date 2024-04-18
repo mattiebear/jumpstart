@@ -5,8 +5,8 @@ defmodule Jumpstart.Translate.Locale do
   schema "locales" do
     field :code, :string
     field :name, :string
-    # TODO: Change to boolean
-    field :role, Ecto.Enum, values: [target: 0, source: 1]
+    field :source, :boolean, default: false
+    field :status, Ecto.Enum, values: [active: 1, inactive: 2]
 
     belongs_to :translate_settings, Jumpstart.Translate.TranslateSettings
 
@@ -16,7 +16,7 @@ defmodule Jumpstart.Translate.Locale do
   @doc false
   def changeset(locale, attrs) do
     locale
-    |> cast(attrs, [:code, :name, :role])
-    |> validate_required([:code, :name, :role])
+    |> cast(attrs, [:code, :name, :source, :status])
+    |> validate_required([:code, :name, :source])
   end
 end

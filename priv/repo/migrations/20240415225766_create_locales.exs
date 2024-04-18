@@ -5,9 +5,11 @@ defmodule Jumpstart.Repo.Migrations.CreateLocales do
     create table(:locales) do
       add :code, :string, null: false
       add :name, :string, null: false
-      add :role, :integer, default: 0
+      add :source, :boolean, default: false
+      add :status, :integer, default: 1
 
-      add :translate_settings_id, references(:translate_settings, on_delete: :delete_all), null: false
+      add :translate_settings_id, references(:translate_settings, on_delete: :delete_all),
+        null: false
 
       timestamps(type: :utc_datetime)
     end
