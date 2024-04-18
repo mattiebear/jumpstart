@@ -32,4 +32,18 @@ defmodule Jumpstart.TranslateFixtures do
 
     locale
   end
+
+  @doc """
+  Generate a namespace.
+  """
+  def namespace_fixture(attrs \\ %{}) do
+    {:ok, namespace} =
+      attrs
+      |> Enum.into(%{
+        name: "some name"
+      })
+      |> Jumpstart.Translate.create_namespace()
+
+    namespace
+  end
 end
