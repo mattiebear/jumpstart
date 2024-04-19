@@ -1,43 +1,41 @@
 defmodule JumpstartWeb.Translate.LocaleFormComponent do
   use JumpstartWeb, :live_component
 
+  alias Jumpstart.Translate
+
   @impl true
   def render(assigns) do
     ~H"""
-    <.simple_form for={@form} phx-change="validate" phx-submit="save">
-      <fieldset class="flex flex-col gap-y-4 mb-2">
-        <.inputs_for :let={locale} field={@form[:locales]}>
-          <.input field={locale[:id]} type="hidden" />
-          <.input field={locale[:name]} label="Language" phx-debounce />
-          <.input field={locale[:code]} label="Locale Code" phx-debounce />
-          <.input field={locale[:source]} label="Source locale" type="checkbox" />
-        </.inputs_for>
+    <div>
+      <.header>
+        <%= @title %>
+        <:subtitle>Manage the locales supported by by your application</:subtitle>
+      </.header>
 
-        <button
-          class="px-4 py-3 rounded-xl flex justify-center items-center w-full border border-solid border-purple-500 text-purple-500"
-          phx-click="add-locale"
-          type="button"
-        >
-          <.icon name="hero-plus-circle" class="mr-2" /> Add locale
-        </button>
-      </fieldset>
+      <.simple_form for={@form} phx-change="validate" phx-submit="save" phx-target={@myself}>
+        <fieldset class="flex flex-col gap-y-4 mb-2">
+          <.input field={@form[:id]} type="hidden" />
+          <.input field={@form[:name]} label="Language" phx-debounce />
+          <.input field={@form[:code]} label="Locale Code" phx-debounce />
+        </fieldset>
 
-      <:actions>
-        <.button type="submit" phx-disable-with="Saving...">Save settings</.button>
-      </:actions>
-    </.simple_form>
+        <:actions>
+          <.button type="submit" phx-disable-with="Saving...">Save settings</.button>
+        </:actions>
+      </.simple_form>
+    </div>
     """
   end
 
-  # @impl true
-  # def update(%{post: post} = assigns, socket) do
-  #   changeset = Articles.change_post(post)
+  @impl true
+  def update(%{locale: locale} = assigns, socket) do
+    changeset = Translate.change_locale(locale)
 
-  #   {:ok,
-  #    socket
-  #    |> assign(assigns)
-  #    |> assign_form(changeset)}
-  # end
+    {:ok,
+     socket
+     |> assign(assigns)
+     |> assign_form(changeset)}
+  end
 
   # @impl true
   # def handle_event("validate", %{"post" => post_params}, socket) do
@@ -83,9 +81,9 @@ defmodule JumpstartWeb.Translate.LocaleFormComponent do
   #   end
   # end
 
-  # defp assign_form(socket, %Ecto.Changeset{} = changeset) do
-  #   assign(socket, :form, to_form(changeset))
-  # end
+  defp assign_form(socket, %Ecto.Changeset{} = changeset) do
+    assign(socket, :form, to_form(changeset))
+  end
 
   # defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 end

@@ -5,7 +5,7 @@
   </.header>
 
   <div class="flex flex-col gap-y-2 mt-2">
-    <%= for locale <- @settings.locales do %>
+    <%= for locale <- @locales do %>
       <div class="dark:bg-zinc-800 px-4 py-3 rounded-xl flex gap-x-3 items-center">
         <img
           src={"https://unpkg.com/language-icons/icons/#{locale.code}.svg"}
@@ -32,10 +32,20 @@
 
     <button
       class="px-4 py-3 rounded-xl flex justify-center items-center w-full border border-solid border-purple-500 text-purple-500"
-      phx-click="add-locale"
+      phx-click="add_locale"
       type="button"
     >
       <.icon name="hero-plus-circle" class="mr-2" /> Add locale
     </button>
   </div>
 </div>
+
+<.modal :if={@action in [:new, :edit]} id="locale-modal" show on_cancel={JS.push("close_modal")}>
+  <.live_component
+    module={JumpstartWeb.Translate.LocaleFormComponent}
+    id={@locale.id || :new}
+    action={@action}
+    locale={@locale}
+    title={@modal_title}
+  />
+</.modal>
