@@ -4,36 +4,38 @@
     <:subtitle>Configure the managed source and target locales</:subtitle>
   </.header>
 
-  <.simple_form for={@form} phx-change="validate" phx-submit="save">
-    <fieldset class="flex flex-col gap-y-4 mb-2">
-      <.inputs_for :let={locale} field={@form[:locales]}>
-        <div class="dark:bg-zinc-800 px-4 py-3 rounded-xl flex gap-2">
-          <.input field={locale[:id]} type="hidden" />
-          <div>
-            <.input field={locale[:name]} label="Language" phx-debounce />
+  <div class="flex flex-col gap-y-2 mt-2">
+    <%= for locale <- @settings.locales do %>
+      <div class="dark:bg-zinc-800 px-4 py-3 rounded-xl flex gap-x-3 items-center">
+        <img
+          src={"https://unpkg.com/language-icons/icons/#{locale.code}.svg"}
+          alt="United States flag"
+          class="w-8 h-8 rounded-full"
+        />
+
+        <span class="text-lg text-zinc-300"><%= locale.name %></span>
+        <span class="text-zinc-500">(<%= locale.code %>)</span>
+
+        <div class="flex-1" />
+
+        <%= if locale.source do %>
+          <div class="border border-solid border-green-500 text-green-500 rounded-full px-4">
+            Source
           </div>
+        <% end %>
 
-          <div>
-            <.input field={locale[:code]} label="Locale Code" phx-debounce />
-          </div>
+        <.button>
+          Edit
+        </.button>
+      </div>
+    <% end %>
 
-          <div>
-            <.input field={locale[:source]} label="Source locale" type="checkbox" />
-          </div>
-        </div>
-      </.inputs_for>
-
-      <button
-        class="px-4 py-3 rounded-xl flex justify-center items-center w-full border border-solid border-purple-500 text-purple-500"
-        phx-click="add-locale"
-        type="button"
-      >
-        <.icon name="hero-plus-circle" class="mr-2" /> Add locale
-      </button>
-    </fieldset>
-
-    <:actions>
-      <.button type="submit" phx-disable-with="Saving...">Save settings</.button>
-    </:actions>
-  </.simple_form>
+    <button
+      class="px-4 py-3 rounded-xl flex justify-center items-center w-full border border-solid border-purple-500 text-purple-500"
+      phx-click="add-locale"
+      type="button"
+    >
+      <.icon name="hero-plus-circle" class="mr-2" /> Add locale
+    </button>
+  </div>
 </div>
