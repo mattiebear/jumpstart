@@ -1,7 +1,5 @@
 defmodule JumpstartWeb.Translate.SettingsLive do
-  alias Ecto.Changeset
   alias Jumpstart.Repo
-  alias Jumpstart.Translate
   alias Jumpstart.Translate.Locale
 
   use JumpstartWeb, :live_view
@@ -9,13 +7,16 @@ defmodule JumpstartWeb.Translate.SettingsLive do
   def mount(_params, _session, socket) do
     user =
       socket.assigns.current_user
-      |> Repo.preload(account: [translate_settings: :locales])
+      |> Repo.preload(account: :translate_settings)
+
+    locales = user.account.translate_settings |> Repo.preload(:locales) |> Map.get(:locales)
 
     socket =
       socket
       |> assign(:locale, nil)
       |> assign(:action, :index)
-      |> assign(:locales, user.account.translate_settings.locales)
+      |> assign(:settings, user.account.translate_settings)
+      |> stream(:locales, locales)
 
     {:ok, socket}
   end
@@ -25,16 +26,6 @@ defmodule JumpstartWeb.Translate.SettingsLive do
 
     {:noreply, assign(socket, :navigation, navigation)}
   end
-
-  # def handle_event("validate", %{"translate_settings" => params}, socket) do
-  #   form =
-  #     %TranslateSettings{}
-  #     |> TranslateSettings.changeset(params)
-  #     |> Map.put(:action, "validate")
-  #     |> to_form()
-
-  #   {:noreply, assign(socket, form: form)}
-  # end
 
   def handle_event("add_locale", _params, socket) do
     socket =
@@ -55,17 +46,11 @@ defmodule JumpstartWeb.Translate.SettingsLive do
     {:noreply, socket}
   end
 
-  # def handle_event("save", %{"translate_settings" => params}, socket) do
-  #   case Translate.update_translate_settings(
-  #          socket.assigns.settings,
-  #          params
-  #        ) do
-  #     {:ok, _} ->
-  #       {:noreply, put_flash(socket, :info, "Settings saved successfully.")}
+  def handle_info({JumpstartWeb.Translate.LocaleFormComponent, {:saved, locale}}, socket) do
+    # socket = update(socket, :)
 
-  #     {:error, %Ecto.Changeset{} = changeset} ->
-  #       form = to_form(changeset)
-  #       {:noreply, assign(socket, form: form)}
-  #   end
-  # end
+    # {:noreply, socket}
+
+    # {:noreply, stream_insert(socket, :posts, post)}
+  end
 end

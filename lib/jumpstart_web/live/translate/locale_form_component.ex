@@ -1,7 +1,10 @@
 defmodule JumpstartWeb.Translate.LocaleFormComponent do
-  use JumpstartWeb, :live_component
-
+  alias Ecto.Changeset
+  alias Jumpstart.Repo
   alias Jumpstart.Translate
+  alias Jumpstart.Translate.Locale
+
+  use JumpstartWeb, :live_component
 
   @impl true
   def render(assigns) do
@@ -37,21 +40,23 @@ defmodule JumpstartWeb.Translate.LocaleFormComponent do
      |> assign_form(changeset)}
   end
 
-  # @impl true
-  # def handle_event("validate", %{"post" => post_params}, socket) do
-  #   changeset =
-  #     socket.assigns.post
-  #     |> Articles.change_post(post_params)
-  #     |> Map.put(:action, :validate)
+  @impl true
+  def handle_event("validate", %{"locale" => params}, socket) do
+    form =
+      %Locale{}
+      |> Translate.change_locale(params)
+      |> Map.put(:action, "validate")
+      |> to_form()
 
-  #   {:noreply, assign_form(socket, changeset)}
-  # end
+    {:noreply, assign(socket, form: form)}
+  end
 
-  # def handle_event("save", %{"post" => post_params}, socket) do
-  #   save_post(socket, socket.assigns.action, post_params)
-  # end
+  @impl true
+  def handle_event("save", %{"locale" => params}, socket) do
+    save_locale(socket, socket.assigns.action, params)
+  end
 
-  # defp save_post(socket, :edit, post_params) do
+  # defp save_locale(socket, :edit, post_params) do
   #   case Articles.update_post(socket.assigns.post, post_params) do
   #     {:ok, post} ->
   #       notify_parent({:saved, post})
@@ -66,24 +71,26 @@ defmodule JumpstartWeb.Translate.LocaleFormComponent do
   #   end
   # end
 
-  # defp save_post(socket, :new, post_params) do
-  #   case Articles.create_post(post_params) do
-  #     {:ok, post} ->
-  #       notify_parent({:saved, post})
+  defp save_locale(socket, :new, params) do
+    changeset =
+      %Locale{}
+      |> Translate.change_locale(params)
+      |> Changeset.put_assoc(:translate_settings, socket.assigns.settings)
 
-  #       {:noreply,
-  #        socket
-  #        |> put_flash(:info, "Post created successfully")
-  #        |> push_patch(to: socket.assigns.patch)}
+    case Repo.insert(changeset) do
+      {:ok, locale} ->
+        notify_parent({:saved, locale})
+        {:noreply, put_flash(socket, :info, "Locale created successfully.")}
 
-  #     {:error, %Ecto.Changeset{} = changeset} ->
-  #       {:noreply, assign_form(socket, changeset)}
-  #   end
-  # end
+      {:error, %Ecto.Changeset{} = changeset} ->
+        form = to_form(changeset)
+        {:noreply, assign(socket, form: form)}
+    end
+  end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
     assign(socket, :form, to_form(changeset))
   end
 
-  # defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 end
