@@ -5,12 +5,10 @@ defmodule JumpstartWeb.Translate.SettingsLive do
   use JumpstartWeb, :live_view
 
   def mount(_params, _session, socket) do
-    locales = Translate.list_locales_for_project(socket.assigns.current_project.id)
-
     socket =
       socket
+      |> stream_locales()
       |> assign(%{locale: nil, action: :index})
-      |> stream(:locales, locales)
 
     {:ok, socket}
   end
@@ -42,5 +40,23 @@ defmodule JumpstartWeb.Translate.SettingsLive do
       |> stream_insert(:locales, locale)
 
     {:noreply, socket}
+  end
+
+  def handle_info({JumpstartWeb.Translate.LocaleFormComponent, {:source_set, _locale}}, socket) do
+    socket =
+      socket
+      |> stream_locales()
+      |> assign(%{locale: nil, action: :index})
+
+    {:noreply, socket}
+  end
+
+  def handle_info({:put_flash, type, message}, socket) do
+    {:noreply, put_flash(socket, type, message)}
+  end
+
+  defp stream_locales(socket) do
+    locales = Translate.list_locales_for_project(socket.assigns.current_project.id)
+    stream(socket, :locales, locales)
   end
 end

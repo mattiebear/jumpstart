@@ -10,7 +10,7 @@ defmodule Jumpstart.Translate do
   alias Jumpstart.Translate.Locale
 
   def list_locales_for_project(project_id) do
-    from(l in Locale, where: l.project_id == ^project_id, order_by: [desc: :source, asc: :name])
+    from(l in Locale, where: l.project_id == ^project_id, order_by: [asc: :name])
     |> Repo.all()
   end
 
