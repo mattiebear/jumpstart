@@ -74,6 +74,7 @@ defmodule JumpstartWeb.Router do
       live "/dashboard", Home.DashboardLive, :index
 
       live "/translate/settings", Translate.SettingsLive, :edit
+      live "/translate/translations", Translate.TranslationsLive, :index
       live "/translate", Translate.DashboardLive, :index
     end
   end
