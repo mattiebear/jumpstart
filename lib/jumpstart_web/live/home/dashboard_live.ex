@@ -1,4 +1,4 @@
-defmodule JumpstartWeb.DashboardLive.Index do
+defmodule JumpstartWeb.Home.DashboardLive do
   use JumpstartWeb, :live_view
 
   alias Phoenix.LiveView.JS, warn: false
@@ -13,7 +13,7 @@ defmodule JumpstartWeb.DashboardLive.Index do
     {:noreply, assign(socket, :navigation, navigation)}
   end
 
-  def handle_info({JumpstartWeb.Global.ProjectForm, {:saved, _project}}, socket) do
+  def handle_info({JumpstartWeb.Navigation.ProjectForm, {:saved, _project}}, socket) do
     # Perform full page reload to update the project list
     {:noreply, socket |> push_redirect(to: ~p"/dashboard")}
   end

@@ -3,6 +3,7 @@ defmodule JumpstartWeb.Navigation do
     path |> URI.parse() |> Map.get(:path)
   end
 
+  # TODO: Make this better
   def build_navigation(url) do
     path = parse_path(url)
 

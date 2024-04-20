@@ -1,4 +1,4 @@
-defmodule JumpstartWeb.Global.ProjectForm do
+defmodule JumpstartWeb.Navigation.ProjectForm do
   use JumpstartWeb, :live_component
 
   alias Jumpstart.Projects
