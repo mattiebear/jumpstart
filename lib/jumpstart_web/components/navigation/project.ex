@@ -10,7 +10,12 @@ defmodule JumpstartWeb.Global.Project do
       list_projects_for_account(socket.assigns.current_user.account_id)
 
     current_project_id = session["current_project_id"]
-    current_project = get_project(current_project_id)
+
+    current_project =
+      case current_project_id do
+        nil -> nil
+        _ -> get_project!(current_project_id)
+      end
 
     socket =
       socket

@@ -18,8 +18,7 @@ defmodule Jumpstart.Projects do
     |> Repo.insert()
   end
 
-  def get_project(id) when is_nil(id), do: nil
-  def get_project(id), do: Repo.get(Project, id)
+  def get_project!(id), do: Repo.get!(Project, id)
 
   def change_project(%Project{} = project, attrs \\ %{}) do
     Project.changeset(project, attrs)
