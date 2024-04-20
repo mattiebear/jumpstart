@@ -56,20 +56,19 @@ defmodule JumpstartWeb.Translate.LocaleFormComponent do
     save_locale(socket, socket.assigns.action, params)
   end
 
-  # defp save_locale(socket, :edit, post_params) do
-  #   case Articles.update_post(socket.assigns.post, post_params) do
-  #     {:ok, post} ->
-  #       notify_parent({:saved, post})
+  defp save_locale(socket, :edit, params) do
+    case Translate.update_locale(socket.assigns.locale, params) do
+      {:ok, locale} ->
+        notify_parent({:saved, locale})
 
-  #       {:noreply,
-  #        socket
-  #        |> put_flash(:info, "Post updated successfully")
-  #        |> push_patch(to: socket.assigns.patch)}
+        {:noreply,
+         socket
+         |> put_flash(:info, "Locale updated successfully")}
 
-  #     {:error, %Ecto.Changeset{} = changeset} ->
-  #       {:noreply, assign_form(socket, changeset)}
-  #   end
-  # end
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign_form(socket, changeset)}
+    end
+  end
 
   defp save_locale(socket, :new, params) do
     changeset =

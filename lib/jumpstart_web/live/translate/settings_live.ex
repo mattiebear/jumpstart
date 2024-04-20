@@ -9,8 +9,7 @@ defmodule JumpstartWeb.Translate.SettingsLive do
 
     socket =
       socket
-      |> assign(:locale, nil)
-      |> assign(:action, :index)
+      |> assign(%{locale: nil, action: :index})
       |> stream(:locales, locales)
 
     {:ok, socket}
@@ -23,29 +22,23 @@ defmodule JumpstartWeb.Translate.SettingsLive do
   end
 
   def handle_event("add_locale", _params, socket) do
-    socket =
-      socket
-      |> assign(:locale, %Locale{})
-      |> assign(:modal_title, "Add locale")
-      |> assign(:action, :new)
+    {:noreply, assign(socket, %{locale: %Locale{}, action: :new, modal_title: "Add locale"})}
+  end
 
-    {:noreply, socket}
+  def handle_event("edit_locale", %{"id" => id}, socket) do
+    locale = Translate.get_locale!(id)
+
+    {:noreply, assign(socket, %{locale: locale, action: :edit, modal_title: "Edit locale"})}
   end
 
   def handle_event("close_modal", _params, socket) do
-    socket =
-      socket
-      |> assign(:locale, nil)
-      |> assign(:action, :index)
-
-    {:noreply, socket}
+    {:noreply, assign(socket, %{locale: nil, action: :index})}
   end
 
   def handle_info({JumpstartWeb.Translate.LocaleFormComponent, {:saved, locale}}, socket) do
     socket =
       socket
-      |> assign(:locale, nil)
-      |> assign(:action, :index)
+      |> assign(%{locale: nil, action: :index})
       |> stream_insert(:locales, locale)
 
     {:noreply, socket}
