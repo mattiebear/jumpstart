@@ -5,6 +5,7 @@ defmodule Jumpstart.Translate do
 
   import Ecto.Query, warn: false
 
+  alias Ecto.Multi
   alias Jumpstart.Repo
   alias Jumpstart.Translate.Locale
 
@@ -31,5 +32,19 @@ defmodule Jumpstart.Translate do
 
   def change_locale(%Locale{} = locale, attrs \\ %{}) do
     Locale.changeset(locale, attrs)
+  end
+
+  def set_source_locale(locale) do
+    query =
+      from(l in Locale,
+        where: l.project_id == ^locale.project_id and l.source == true
+      )
+
+    changeset = change_locale(locale, %{source: true})
+
+    Multi.new()
+    |> Multi.update_all(:deactivate, query, set: [source: false])
+    |> Multi.update(:activate, changeset)
+    |> Repo.transaction()
   end
 end
