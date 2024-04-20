@@ -17,15 +17,18 @@
       />
 
       <span class="text-lg text-zinc-300"><%= locale.name %></span>
-      <span class="text-zinc-500">(<%= locale.code %>)</span>
 
-      <div class="flex-1" />
+      <div class="border border-solid border-purple-500 text-purple-500 rounded-full px-2 text-sm uppercase">
+        <%= locale.code %>
+      </div>
 
       <%= if locale.source do %>
         <div class="border border-solid border-green-500 text-green-500 rounded-full px-4">
           Source
         </div>
       <% end %>
+
+      <div class="flex-1" />
 
       <.button>
         Edit

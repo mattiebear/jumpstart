@@ -9,6 +9,12 @@ defmodule Jumpstart.Accounts do
   alias Jumpstart.Accounts.{Account, User, UserToken, UserNotifier}
   alias Jumpstart.{Projects, Translate}
 
+  @default_locales [
+    %{code: "en", name: "English", source: true},
+    %{code: "es", name: "Spanish", source: false},
+    %{code: "fr", name: "French", source: false}
+  ]
+
   ## Database getters
 
   @doc """
@@ -79,15 +85,11 @@ defmodule Jumpstart.Accounts do
   def register_user(attrs) do
     {:ok, account} = create_account(%{name: "My Organization"})
 
-    Projects.create_project_on_account(account.id, %{name: "My Project"})
+    {:ok, project} = Projects.create_project_on_account(account.id, %{name: "My Project"})
 
-    Translate.create_settings_on_account(account.id, %{
-      locales: [
-        %Translate.Locale{code: "en", name: "English", source: true},
-        %Translate.Locale{code: "es", name: "Spanish", source: false},
-        %Translate.Locale{code: "fr", name: "French", source: false}
-      ]
-    })
+    Enum.each(@default_locales, fn locale_attrs ->
+      Translate.create_locale_on_project(project.id, locale_attrs)
+    end)
 
     %User{}
     |> User.registration_changeset(attrs)

@@ -23,7 +23,7 @@ defmodule JumpstartWeb.Translate.LocaleFormComponent do
         </fieldset>
 
         <:actions>
-          <.button type="submit" phx-disable-with="Saving...">Save settings</.button>
+          <.button type="submit" phx-disable-with="Saving...">Save</.button>
         </:actions>
       </.simple_form>
     </div>

@@ -12,13 +12,14 @@ defmodule Jumpstart.ProjectsFixtures do
   def project_fixture(attrs \\ %{}) do
     account = AccountsFixtures.account_fixture()
 
-    {:ok, project} =
+    attrs =
       attrs
       |> Enum.into(%{
-        account_id: account.id,
         name: "some name"
       })
-      |> Jumpstart.Projects.create_project()
+
+    {:ok, project} =
+      Jumpstart.Projects.create_project_on_account(account.id, attrs)
 
     project
   end

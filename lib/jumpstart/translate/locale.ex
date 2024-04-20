@@ -8,7 +8,7 @@ defmodule Jumpstart.Translate.Locale do
     field :source, :boolean, default: false
     field :status, Ecto.Enum, values: [active: 1, inactive: 2]
 
-    belongs_to :translate_settings, Jumpstart.Translate.TranslateSettings
+    belongs_to :project, Jumpstart.Projects.Project
 
     timestamps(type: :utc_datetime)
   end
