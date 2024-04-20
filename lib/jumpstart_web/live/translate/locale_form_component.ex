@@ -75,7 +75,7 @@ defmodule JumpstartWeb.Translate.LocaleFormComponent do
     changeset =
       %Locale{}
       |> Translate.change_locale(params)
-      |> Changeset.put_assoc(:translate_settings, socket.assigns.settings)
+      |> Changeset.put_assoc(:project, socket.assigns.project)
 
     case Repo.insert(changeset) do
       {:ok, locale} ->

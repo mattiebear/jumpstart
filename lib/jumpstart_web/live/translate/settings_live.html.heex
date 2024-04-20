@@ -4,7 +4,7 @@
     <:subtitle>Configure the managed source and target locales</:subtitle>
   </.header>
 
-  <div class="flex flex-col gap-y-2 mt-2">
+  <div id="locales" phx-update="stream" class="flex flex-col gap-y-2 my-2">
     <div
       :for={{dom_id, locale} <- @streams.locales}
       id={dom_id}
@@ -34,15 +34,15 @@
         Edit
       </.button>
     </div>
-
-    <button
-      class="px-4 py-3 rounded-xl flex justify-center items-center w-full border border-solid border-purple-500 text-purple-500"
-      phx-click="add_locale"
-      type="button"
-    >
-      <.icon name="hero-plus-circle" class="mr-2" /> Add locale
-    </button>
   </div>
+
+  <button
+    class="px-4 py-3 rounded-xl flex justify-center items-center w-full border border-solid border-purple-500 text-purple-500"
+    phx-click="add_locale"
+    type="button"
+  >
+    <.icon name="hero-plus-circle" class="mr-2" /> Add locale
+  </button>
 </div>
 
 <.modal :if={@action in [:new, :edit]} id="locale-modal" show on_cancel={JS.push("close_modal")}>
@@ -52,5 +52,6 @@
     action={@action}
     locale={@locale}
     title={@modal_title}
+    project={@current_project}
   />
 </.modal>

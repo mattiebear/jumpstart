@@ -41,11 +41,13 @@ defmodule JumpstartWeb.Translate.SettingsLive do
     {:noreply, socket}
   end
 
-  # def handle_info({JumpstartWeb.Translate.LocaleFormComponent, {:saved, locale}}, socket) do
-  # socket = update(socket, :)
+  def handle_info({JumpstartWeb.Translate.LocaleFormComponent, {:saved, locale}}, socket) do
+    socket =
+      socket
+      |> assign(:locale, nil)
+      |> assign(:action, :index)
+      |> stream_insert(:locales, locale)
 
-  # {:noreply, socket}
-
-  # {:noreply, stream_insert(socket, :posts, post)}
-  # end
+    {:noreply, socket}
+  end
 end
