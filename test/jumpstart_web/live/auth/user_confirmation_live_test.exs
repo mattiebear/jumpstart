@@ -1,4 +1,4 @@
-defmodule JumpstartWeb.UserConfirmationLiveTest do
+defmodule JumpstartWeb.Auth.UserConfirmationLiveTest do
   use JumpstartWeb.ConnCase, async: true
 
   import Phoenix.LiveViewTest

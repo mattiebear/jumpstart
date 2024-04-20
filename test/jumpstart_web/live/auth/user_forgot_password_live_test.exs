@@ -1,4 +1,4 @@
-defmodule JumpstartWeb.UserForgotPasswordLiveTest do
+defmodule JumpstartWeb.Auth.UserForgotPasswordLiveTest do
   use JumpstartWeb.ConnCase, async: true
 
   import Phoenix.LiveViewTest

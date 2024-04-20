@@ -1,4 +1,4 @@
-defmodule JumpstartWeb.UserSettingsLiveTest do
+defmodule JumpstartWeb.Auth.UserSettingsLiveTest do
   use JumpstartWeb.ConnCase, async: true
 
   alias Jumpstart.Accounts
