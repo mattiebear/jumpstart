@@ -34,15 +34,16 @@
         Edit
       </.button>
     </div>
-  </div>
 
-  <button
-    class="px-4 py-3 rounded-xl flex justify-center items-center w-full border border-solid border-purple-500 text-purple-500 hover:border-purple-600 hover:text-purple-600 transition-colors duration-200 ease-in-out"
-    phx-click="add_locale"
-    type="button"
-  >
-    <.icon name="hero-plus-circle" class="mr-2" /> Add locale
-  </button>
+    <button
+      class="px-4 py-3 rounded-xl flex justify-center items-center w-full border border-solid border-purple-500 text-purple-500 hover:border-purple-600 hover:text-purple-600 transition-colors duration-200 ease-in-out"
+      id="add_locale_button"
+      phx-click="add_locale"
+      type="button"
+    >
+      <.icon name="hero-plus-circle" class="mr-2" /> Add locale
+    </button>
+  </div>
 </div>
 
 <.modal :if={@action in [:new, :edit]} id="locale-modal" show on_cancel={JS.push("close_modal")}>

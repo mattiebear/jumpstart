@@ -11,7 +11,7 @@ defmodule JumpstartWeb.Navigation do
       dashboard: path == "/dashboard",
       translate: Regex.match?(~r/\/translate/, path),
       translate_dashboard: path == "/translate",
-      translate_translations: path == "/translate/translations",
+      translate_translations: path == "/translate/namespaces",
       translate_users: path == "/translate/users",
       translate_settings: path == "/translate/settings",
       translate_developer: path == "/translate/developer",

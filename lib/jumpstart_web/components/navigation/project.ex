@@ -22,7 +22,12 @@ defmodule JumpstartWeb.Global.Project do
       |> assign(:projects, projects)
 
     if current_project do
-      {:cont, assign(socket, :current_project, current_project)}
+      socket =
+        socket
+        |> assign(:current_project, current_project)
+        |> filter_projects()
+
+      {:cont, socket}
     else
       activate_default_project(socket, projects)
     end
@@ -34,8 +39,16 @@ defmodule JumpstartWeb.Global.Project do
     socket =
       socket
       |> assign(:current_project, project)
+      |> filter_projects()
       |> redirect(to: ~p"/projects/#{project.id}/activate")
 
     {:halt, assign(socket, :current_project, project)}
+  end
+
+  defp filter_projects(socket) do
+    socket
+    |> update(:projects, fn projects ->
+      Enum.filter(projects, &(&1.id != socket.assigns.current_project.id))
+    end)
   end
 end

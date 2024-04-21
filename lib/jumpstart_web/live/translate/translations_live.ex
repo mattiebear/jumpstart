@@ -30,6 +30,10 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
      })}
   end
 
+  def handle_event("close_modal", _params, socket) do
+    {:noreply, assign(socket, %{namespace: nil, action: :index})}
+  end
+
   def handle_info({JumpstartWeb.Translate.NamespaceFormComponent, {:saved, namespace}}, socket) do
     socket =
       socket
