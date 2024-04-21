@@ -49,7 +49,17 @@ defmodule Jumpstart.Translate do
   end
 
   def list_namespaces_for_project(project_id) do
-    from(n in Namespace, where: n.project_id == ^project_id)
+    from(n in Namespace, where: n.project_id == ^project_id, order_by: [asc: :name])
     |> Repo.all()
+  end
+
+  def change_namespace(%Namespace{} = namespace, attrs \\ %{}) do
+    Namespace.changeset(namespace, attrs)
+  end
+
+  def update_namespace(%Namespace{} = namespace, attrs) do
+    namespace
+    |> change_namespace(attrs)
+    |> Repo.update()
   end
 end
