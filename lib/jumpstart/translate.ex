@@ -7,7 +7,7 @@ defmodule Jumpstart.Translate do
 
   alias Ecto.Multi
   alias Jumpstart.Repo
-  alias Jumpstart.Translate.Locale
+  alias Jumpstart.Translate.{Locale, Namespace}
 
   def list_locales_for_project(project_id) do
     from(l in Locale, where: l.project_id == ^project_id, order_by: [asc: :name])
@@ -46,5 +46,10 @@ defmodule Jumpstart.Translate do
     |> Multi.update_all(:deactivate, query, set: [source: false])
     |> Multi.update(:activate, changeset)
     |> Repo.transaction()
+  end
+
+  def list_namespaces_for_project(project_id) do
+    from(n in Namespace, where: n.project_id == ^project_id)
+    |> Repo.all()
   end
 end

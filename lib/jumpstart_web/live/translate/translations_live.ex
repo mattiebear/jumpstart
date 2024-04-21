@@ -1,18 +1,16 @@
 defmodule JumpstartWeb.Translate.TranslationsLive do
-  alias Jumpstart.Translate.Namespace
-  alias Jumpstart.Repo
+  alias Jumpstart.Translate
 
   use JumpstartWeb, :live_view
 
   import Ecto.Query, warn: false
 
   def mount(_params, _session, socket) do
-    namespaces = from(n in Namespace, where: n.project_id == ^socket.assigns.current_project.id) |> Repo.all()
+    namespaces = Translate.list_namespaces_for_project(socket.assigns.current_project.id)
 
     {:ok, assign(socket, :namespaces, namespaces)}
   end
 
-  @spec handle_params(any(), binary() | URI.t(), map()) :: {:noreply, map()}
   def handle_params(_params, url, socket) do
     # TODO: Make this automatic
     navigation = JumpstartWeb.Navigation.build_navigation(url)
