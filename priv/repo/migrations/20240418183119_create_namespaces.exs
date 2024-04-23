@@ -4,12 +4,12 @@ defmodule Jumpstart.Repo.Migrations.CreateNamespaces do
   def change do
     create table(:namespaces) do
       add :name, :string
-      add :project_id, references(:projects, on_delete: :nothing)
+      add :project_id, references(:projects, on_delete: :delete_all)
 
       timestamps(type: :utc_datetime)
     end
 
     create index(:namespaces, [:project_id])
-    create index(:namespaces, [:name, :project_id], unique: true)
+    create unique_index(:namespaces, [:name, :project_id])
   end
 end
