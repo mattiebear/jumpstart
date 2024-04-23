@@ -10,5 +10,6 @@ defmodule Jumpstart.Repo.Migrations.CreateNamespaces do
     end
 
     create index(:namespaces, [:project_id])
+    create index(:namespaces, [:name, :project_id], unique: true)
   end
 end

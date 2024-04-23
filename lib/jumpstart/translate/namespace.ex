@@ -15,5 +15,6 @@ defmodule Jumpstart.Translate.Namespace do
     namespace
     |> cast(attrs, [:name])
     |> validate_required([:name])
+    |> unsafe_validate_unique([:name, :project_id], Jumpstart.Repo)
   end
 end

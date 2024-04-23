@@ -38,7 +38,7 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
     socket =
       socket
       |> assign(%{namespace: nil, action: :index})
-      |> stream_insert(:namespaces, namespace)
+      |> stream_insert(:namespaces, namespace, at: 0)
 
     {:noreply, socket}
   end
