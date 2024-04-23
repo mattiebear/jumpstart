@@ -1,18 +1,19 @@
 # Jumpstart
 
-To start your Phoenix server:
+## Initial Setup
 
-  * Run `mix setup` to install and setup dependencies
+  * Start Docker for your environment
+  * Run `mix setup` to install and set up dependencies
+  * Run `docker compose up` in a terminal to run services
+  * Run `mix ecto.setup` to create the database and seed it with test data
+
+## Run the Server
+
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+The test user that was created can be accessed with the credentials:
 
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+  * Email: "user@example.com"
+  * Password: "password1234"
