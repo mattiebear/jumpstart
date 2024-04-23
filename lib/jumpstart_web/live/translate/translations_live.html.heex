@@ -1,54 +1,12 @@
-<div class="container">
-  <.header>
-    Namespaces
-    <:subtitle>Each namespace represents a single translation file</:subtitle>
-  </.header>
-
-  <div id="namespaces" phx-update="stream" class="grid gap-4 grid-cols-4 my-2">
-    <.link
-      :for={{dom_id, namespace} <- @streams.namespaces}
-      id={dom_id}
-      class="dark:bg-zinc-800 px-4 py-3 rounded-xl flex flex-col gap-y-2 items-start"
-      navigate={~p"/translate/namespaces/#{namespace.name}"}
-    >
-      <h2 class="text-xl text-zinc-300">
-        <%= namespace.name %>
-      </h2>
-
-      <div class="rounded-full dark:bg-zinc-700 dark:text-zinc-300 flex pl-1.5 pr-3 py-1 items-center">
-        <.icon name="hero-exclamation-circle" class="h-6 w-6 text-orange-600" />
-        <span class="text-orange-600 ml-2">123 pending</span>
-      </div>
-
-      <div class="rounded-full dark:bg-zinc-700 dark:text-zinc-300 flex pl-1.5 pr-3 py-1 items-center">
-        <.icon name="hero-check-circle" class="h-6 w-6 text-green-300" />
-        <span class="text-green-300 ml-2">123 complete</span>
-      </div>
-    </.link>
-
+<div class="max-w-4xl m-auto">
+  <div class="flex justify-end">
     <button
-      class="px-4 py-3 rounded-xl flex justify-center items-center w-full border border-solid border-purple-500 text-purple-500 hover:border-purple-600 hover:text-purple-600 transition-colors duration-200 ease-in-out"
-      id="add_namespace_button"
-      phx-click="add_namespace"
+      class="px-4 py-3 rounded-xl flex justify-center items-center border border-solid border-yellow-300 text-yellow-300 hover:border-yellow-400 hover:text-yellow-400 transition-colors duration-200 ease-in-out"
+      id="add_translation_button"
+      phx-click="add_translation"
       type="button"
     >
-      <.icon name="hero-plus-circle" class="mr-2" /> Add namespace
+      <.icon name="hero-plus-circle" class="mr-2" /> Add translation key
     </button>
   </div>
 </div>
-
-<.modal
-  :if={@action in [:new, :edit]}
-  id="namespace-modal"
-  show
-  on_cancel={JS.push("close_modal")}
->
-  <.live_component
-    module={JumpstartWeb.Translate.NamespaceFormComponent}
-    id={@namespace.id || :new}
-    action={@action}
-    namespace={@namespace}
-    title={@modal_title}
-    project={@current_project}
-  />
-</.modal>
