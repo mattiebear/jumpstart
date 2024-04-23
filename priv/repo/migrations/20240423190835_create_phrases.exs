@@ -6,6 +6,7 @@ defmodule Jumpstart.Repo.Migrations.CreatePhrases do
       add :key, :string, null: false
       add :notes, :string
       add :is_active, :boolean, default: true
+
       add :namespace_id, references(:namespaces, on_delete: :delete_all)
 
       timestamps(type: :utc_datetime)

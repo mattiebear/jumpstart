@@ -4,6 +4,7 @@ defmodule Jumpstart.Repo.Migrations.CreateNamespaces do
   def change do
     create table(:namespaces) do
       add :name, :string
+
       add :project_id, references(:projects, on_delete: :delete_all)
 
       timestamps(type: :utc_datetime)

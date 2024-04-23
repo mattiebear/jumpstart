@@ -3,9 +3,9 @@ defmodule Jumpstart.Repo.Migrations.CreateProjects do
 
   def change do
     create table(:projects) do
-      add :account_id, references(:accounts, on_delete: :delete_all), null: false
-
       add :name, :string, null: false
+
+      add :account_id, references(:accounts, on_delete: :delete_all), null: false
 
       timestamps(type: :utc_datetime)
     end
