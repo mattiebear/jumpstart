@@ -25,7 +25,7 @@ defmodule JumpstartWeb.Translate.LocaleFormComponent do
         <:actions>
           <.button type="submit" phx-disable-with="Saving...">Save</.button>
 
-          <%= if @action == :edit and !@form[:source].value do %>
+          <%= if @action == :edit and !@form[:is_source].value do %>
             <.button
               phx-click="set_source_locale"
               phx-disable-with="Setting..."

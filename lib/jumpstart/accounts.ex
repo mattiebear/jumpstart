@@ -10,9 +10,9 @@ defmodule Jumpstart.Accounts do
   alias Jumpstart.{Projects, Translate}
 
   @default_locales [
-    %{code: "en", name: "English", source: true},
-    %{code: "es", name: "Spanish", source: false},
-    %{code: "fr", name: "French", source: false}
+    %{code: "en", name: "English", is_source: true},
+    %{code: "es", name: "Spanish", is_source: false},
+    %{code: "fr", name: "French", is_source: false}
   ]
 
   ## Database getters

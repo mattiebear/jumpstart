@@ -37,13 +37,13 @@ defmodule Jumpstart.Translate do
   def set_source_locale(locale) do
     query =
       from(l in Locale,
-        where: l.project_id == ^locale.project_id and l.source == true
+        where: l.project_id == ^locale.project_id and l.is_source == true
       )
 
-    changeset = change_locale(locale, %{source: true})
+    changeset = change_locale(locale, %{is_source: true})
 
     Multi.new()
-    |> Multi.update_all(:deactivate, query, set: [source: false])
+    |> Multi.update_all(:deactivate, query, set: [is_source: false])
     |> Multi.update(:activate, changeset)
     |> Repo.transaction()
   end
