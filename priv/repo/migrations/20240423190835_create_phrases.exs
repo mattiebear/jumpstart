@@ -5,7 +5,7 @@ defmodule Jumpstart.Repo.Migrations.CreatePhrases do
     create table(:phrases) do
       add :key, :string, null: false
       add :notes, :string
-      add :is_active, :boolean, default: true
+      add :status, :integer, default: 1
 
       add :namespace_id, references(:namespaces, on_delete: :delete_all)
 
