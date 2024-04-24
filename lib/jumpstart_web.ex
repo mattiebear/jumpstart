@@ -51,6 +51,8 @@ defmodule JumpstartWeb do
 
   def live_view do
     quote do
+      import JumpstartWeb.Navigation
+
       use Phoenix.LiveView,
         layout: {JumpstartWeb.Layouts, :app}
 

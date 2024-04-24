@@ -15,5 +15,6 @@ defmodule Jumpstart.Translate.Translation do
     translation
     |> cast(attrs, [:value])
     |> validate_required([:value])
+    |> unique_constraint([:locale_id, :phrase_id])
   end
 end

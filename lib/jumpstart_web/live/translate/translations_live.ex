@@ -1,5 +1,6 @@
 defmodule JumpstartWeb.Translate.TranslationsLive do
   alias Jumpstart.Translate
+  alias Jumpstart.Translate.{Phrase, Translation}
 
   use JumpstartWeb, :live_view
 
@@ -9,14 +10,26 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
     socket =
       socket
       |> assign(:locales, locales)
+      # TODO: Get translations for the namespace
+      |> stream(:translations, [])
 
     {:ok, socket}
   end
 
-  def handle_params(_params, url, socket) do
-    # TODO: Make this automatic
-    navigation = JumpstartWeb.Navigation.build_navigation(url)
+  def handle_params(%{"id" => name}, url, socket) do
+    namespace = Translate.get_namespace_by_name!(socket.assigns.current_project.id, name)
 
-    {:noreply, assign(socket, :navigation, navigation)}
+    socket =
+      socket
+      |> assign(:namespace, namespace)
+      |> assign_navigation(url)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("add_translation", _params, socket) do
+    # Create a changeset for a phrase with each of the locales as a translation
+    # Convert to form data
+    {:noreply, socket}
   end
 end

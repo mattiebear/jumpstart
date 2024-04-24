@@ -12,6 +12,6 @@ defmodule Jumpstart.Repo.Migrations.CreateTranslations do
     end
 
     create index(:translations, [:locale_id])
-    create index(:translations, [:phrase_id])
+    create unique_index(:translations, [:phrase_id, :locale_id])
   end
 end

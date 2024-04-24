@@ -62,4 +62,8 @@ defmodule Jumpstart.Translate do
     |> change_namespace(attrs)
     |> Repo.update()
   end
+
+  def get_namespace_by_name!(project_id, name) do
+    Repo.get_by!(Namespace, project_id: project_id, name: name)
+  end
 end

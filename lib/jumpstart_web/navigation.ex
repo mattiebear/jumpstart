@@ -1,10 +1,10 @@
 defmodule JumpstartWeb.Navigation do
-  def parse_path(path) do
-    path |> URI.parse() |> Map.get(:path)
+  def assign_navigation(socket, url) do
+    Phoenix.Component.assign(socket, :navigation, build_navigation(url))
   end
 
   # TODO: Make this better
-  def build_navigation(url) do
+  defp build_navigation(url) do
     path = parse_path(url)
 
     %{
@@ -17,5 +17,9 @@ defmodule JumpstartWeb.Navigation do
       translate_developer: path == "/translate/developer",
       account: path == "/account"
     }
+  end
+
+  defp parse_path(path) do
+    path |> URI.parse() |> Map.get(:path)
   end
 end

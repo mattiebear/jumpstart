@@ -14,9 +14,7 @@ defmodule JumpstartWeb.Translate.SettingsLive do
   end
 
   def handle_params(_params, url, socket) do
-    navigation = JumpstartWeb.Navigation.build_navigation(url)
-
-    {:noreply, assign(socket, :navigation, navigation)}
+    {:noreply, assign_navigation(socket, url)}
   end
 
   def handle_event("add_locale", _params, socket) do
