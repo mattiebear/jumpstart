@@ -1,7 +1,7 @@
 defmodule JumpstartWeb.Translate.TranslationsLive do
-  use JumpstartWeb, :live_view
-
   alias Jumpstart.Translate
+
+  use JumpstartWeb, :live_view
 
   def mount(_params, _session, socket) do
     locales = Translate.list_locales_for_project(socket.assigns.current_project.id)
@@ -18,10 +18,5 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
     navigation = JumpstartWeb.Navigation.build_navigation(url)
 
     {:noreply, assign(socket, :navigation, navigation)}
-  end
-
-  # TODO: Add to an import
-  def handle_info({:put_flash, type, message}, socket) do
-    {:noreply, put_flash(socket, type, message)}
   end
 end

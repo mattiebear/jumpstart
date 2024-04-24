@@ -51,10 +51,6 @@ defmodule JumpstartWeb.Translate.SettingsLive do
     {:noreply, socket}
   end
 
-  def handle_info({:put_flash, type, message}, socket) do
-    {:noreply, put_flash(socket, type, message)}
-  end
-
   defp stream_locales(socket) do
     locales = Translate.list_locales_for_project(socket.assigns.current_project.id)
     stream(socket, :locales, locales)

@@ -1,9 +1,9 @@
 defmodule JumpstartWeb.Translate.NamespacesLive do
   alias Jumpstart.Translate
 
-  use JumpstartWeb, :live_view
-
   import Ecto.Query, warn: false
+
+  use JumpstartWeb, :live_view
 
   def mount(_params, _session, socket) do
     socket =
@@ -41,10 +41,6 @@ defmodule JumpstartWeb.Translate.NamespacesLive do
       |> stream_insert(:namespaces, namespace, at: 0)
 
     {:noreply, socket}
-  end
-
-  def handle_info({:put_flash, type, message}, socket) do
-    {:noreply, put_flash(socket, type, message)}
   end
 
   defp stream_namespaces(socket) do

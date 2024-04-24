@@ -54,6 +54,11 @@ defmodule JumpstartWeb do
       use Phoenix.LiveView,
         layout: {JumpstartWeb.Layouts, :app}
 
+      # Allows for flash messages to be created from Live Components
+      def handle_info({:put_flash, type, message}, socket) do
+        {:noreply, Phoenix.LiveView.put_flash(socket, type, message)}
+      end
+
       unquote(html_helpers())
     end
   end
