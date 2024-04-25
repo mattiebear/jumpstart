@@ -1,28 +1,25 @@
 defmodule JumpstartWeb.Translate.TranslationsLive do
   alias Jumpstart.{Repo, Translate}
-  alias Jumpstart.Translate.Phrase
 
   use JumpstartWeb, :live_view
 
   def mount(_params, _session, socket) do
     locales = Translate.list_locales_for_project(socket.assigns.current_project.id)
 
-    socket =
-      socket
-      |> assign(:locales, locales)
-      # TODO: Get translations for the namespace
-      |> stream(:phrases, [])
-
-    {:ok, socket}
+    {:ok, assign(socket, :locales, locales)}
   end
 
   def handle_params(%{"id" => name}, url, socket) do
     namespace = Translate.get_namespace_by_name!(socket.assigns.current_project.id, name)
+    phrases = Translate.list_phrases_for_namespace(namespace.id) |> Repo.preload(:translations)
+
+    forms = Enum.map(phrases, &Translate.change_phrase/1) |> Enum.map(&to_form/1)
 
     socket =
       socket
       |> assign(:namespace, namespace)
       |> assign_navigation(url)
+      |> stream(:phrases, forms)
 
     {:noreply, socket}
   end
@@ -41,7 +38,15 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
 
     case Repo.insert(changeset) do
       {:ok, phrase} ->
-        {:noreply, put_flash(socket, :info, "Translations saved")}
+        form = Translate.change_phrase(phrase) |> to_form()
+
+        socket =
+          socket
+          |> put_flash(:info, "Translations saved")
+          |> stream_delete_by_dom_id(:phrases, dom_id)
+          |> stream_insert(:phrases, form)
+
+        {:noreply, socket}
 
       {:error, changeset} ->
         {:noreply, stream_insert(socket, :phrases, to_form(changeset, id: dom_id))}

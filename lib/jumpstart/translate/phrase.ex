@@ -5,7 +5,7 @@ defmodule Jumpstart.Translate.Phrase do
   schema "phrases" do
     field :key, :string
     field :notes, :string
-    field :status, Ecto.Enum, values: [active: 1, inactive: 2]
+    field :status, Ecto.Enum, values: [active: 1, inactive: 2], default: :active
 
     belongs_to :namespace, Jumpstart.Translate.Namespace
 
