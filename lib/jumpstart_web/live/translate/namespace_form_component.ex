@@ -17,7 +17,13 @@ defmodule JumpstartWeb.Translate.NamespaceFormComponent do
         </:subtitle>
       </.header>
 
-      <.simple_form for={@form} phx-change="validate" phx-submit="save" phx-target={@myself}>
+      <.simple_form
+        for={@form}
+        phx-change="validate"
+        phx-submit="save"
+        phx-target={@myself}
+        autocomplete="off"
+      >
         <fieldset class="flex flex-col gap-y-4 mb-2">
           <.input field={@form[:id]} type="hidden" />
           <.input field={@form[:name]} label="Name" phx-debounce />

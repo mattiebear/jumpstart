@@ -15,6 +15,8 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
 
     forms = Enum.map(phrases, &Translate.change_phrase/1) |> Enum.map(&to_form/1)
 
+    IO.inspect(phrases)
+
     socket =
       socket
       |> assign(:namespace, namespace)
@@ -29,7 +31,7 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
       Translate.init_phrase(socket.assigns.namespace, socket.assigns.locales)
       |> to_form(id: generate_id())
 
-    {:noreply, stream_insert(socket, :phrases, form)}
+    {:noreply, stream_insert(socket, :phrases, form, at: 0)}
   end
 
   def handle_event("save", %{"dom-id" => dom_id, "phrase" => phrase_params}, socket) do

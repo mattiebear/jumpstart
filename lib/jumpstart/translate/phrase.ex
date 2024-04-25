@@ -18,6 +18,9 @@ defmodule Jumpstart.Translate.Phrase do
     phrase
     |> cast(attrs, [:key, :notes, :status])
     |> validate_required([:key, :status])
+    |> validate_format(:key, ~r/^[a-zA-Z0-9_.\-]+$/,
+      message: "can only contain letters, numbers, underscores, and dashes separated by periods"
+    )
     |> unique_constraint([:key, :namespace_id])
     |> cast_assoc(:translations, with: &Jumpstart.Translate.Translation.changeset/2)
   end
