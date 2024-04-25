@@ -1,6 +1,7 @@
 defmodule Jumpstart.Translate.Translation do
-  use Ecto.Schema
   import Ecto.Changeset
+
+  use Ecto.Schema
 
   schema "translations" do
     field :value, :string
@@ -14,7 +15,6 @@ defmodule Jumpstart.Translate.Translation do
   def changeset(translation, attrs) do
     translation
     |> cast(attrs, [:value])
-    |> validate_required([:value])
     |> unique_constraint([:locale_id, :phrase_id])
   end
 end

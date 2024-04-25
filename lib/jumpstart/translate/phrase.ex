@@ -16,8 +16,9 @@ defmodule Jumpstart.Translate.Phrase do
 
   def changeset(phrase, attrs) do
     phrase
-    |> cast(attrs, [:key, :notes, :is_active])
-    |> validate_required([:key])
+    |> cast(attrs, [:key, :notes, :status])
+    |> validate_required([:key, :status])
     |> unique_constraint([:key, :namespace_id])
+    |> cast_assoc(:translations, with: &Jumpstart.Translate.Translation.changeset/2)
   end
 end

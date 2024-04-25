@@ -3,7 +3,7 @@ defmodule Jumpstart.Repo.Migrations.CreateTranslations do
 
   def change do
     create table(:translations) do
-      add :value, :string, null: false
+      add :value, :string
 
       add :locale_id, references(:locales, on_delete: :delete_all)
       add :phrase_id, references(:phrases, on_delete: :delete_all)

@@ -3,11 +3,11 @@ defmodule Jumpstart.Translate do
   The Translate context.
   """
 
-  import Ecto.Query, warn: false
-
   alias Ecto.Multi
   alias Jumpstart.Repo
-  alias Jumpstart.Translate.{Locale, Namespace}
+  alias Jumpstart.Translate.{Locale, Namespace, Phrase, Translation}
+
+  import Ecto.Query, warn: false
 
   def list_locales_for_project(project_id) do
     from(l in Locale, where: l.project_id == ^project_id, order_by: [asc: :name])
@@ -65,5 +65,25 @@ defmodule Jumpstart.Translate do
 
   def get_namespace_by_name!(project_id, name) do
     Repo.get_by!(Namespace, project_id: project_id, name: name)
+  end
+
+  def init_phrase(namespace, locales, attrs \\ %{}) do
+    %Phrase{}
+    |> change_phrase(attrs)
+    |> Ecto.Changeset.put_assoc(:namespace, namespace)
+    |> Ecto.Changeset.put_assoc(:translations, Enum.map(locales, &init_translation/1))
+  end
+
+  def change_phrase(%Phrase{} = phrase, attrs \\ %{}) do
+    Phrase.changeset(phrase, attrs)
+  end
+
+  def init_translation(locale) do
+    %Translation{locale_id: locale.id}
+    |> change_translation()
+  end
+
+  def change_translation(%Translation{} = translation, attrs \\ %{}) do
+    Translation.changeset(translation, attrs)
   end
 end

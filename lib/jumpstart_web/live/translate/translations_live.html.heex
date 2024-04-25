@@ -4,7 +4,6 @@
       <button :for={locale <- @locales} id={"locale-#{locale.id}"}>
         <img
           src={"https://unpkg.com/language-icons/icons/#{locale.code}.svg"}
-          alt="United States flag"
           class="w-8 h-8 rounded-full"
         />
       </button>
@@ -12,8 +11,8 @@
 
     <button
       class="px-4 py-3 rounded-xl flex justify-center items-center border border-solid border-yellow-300 text-yellow-300 hover:border-yellow-400 hover:text-yellow-400 transition-colors duration-200 ease-in-out"
-      id="add_translation_button"
-      phx-click="add_translation"
+      id="add_phrase_button"
+      phx-click="add_phrase"
       type="button"
     >
       <.icon name="hero-plus-circle" class="mr-2" /> Add translation key
@@ -21,8 +20,32 @@
   </div>
 
   <div class="flex flex-col gap-y-4">
-    <div class="dark:bg-zinc-800 px-4 py-3 rounded-xl flex gap-x-3 items-center">
-      live_component
+    <div
+      :for={{dom_id, form} <- @streams.phrases}
+      class="dark:bg-zinc-800 px-4 py-3 rounded-xl flex gap-x-3 items-center"
+      id={dom_id}
+    >
+      <.simple_form for={form} phx-submit="save" phx-value-dom-id={dom_id}>
+        <.input field={form[:key]} label="Key" placeholder="nested.component.key" />
+        <.input field={form[:notes]} label="Notes" type="textarea" />
+
+        <.inputs_for :let={translation} field={form[:translations]}>
+          <.input type="hidden" field={translation[:id]} />
+          <% # TODO: Do this better %>
+          <% locale = Enum.find(@locales, &(&1.id == translation.data.locale_id)) %>
+          <div class="flex gap-x-2 items-center">
+            <img
+              src={"https://unpkg.com/language-icons/icons/#{locale.code}.svg"}
+              class="w-8 h-8 rounded-full"
+            />
+            <.input field={translation[:value]} class="mt-0" />
+          </div>
+        </.inputs_for>
+
+        <:actions>
+          <.button phx-disable-with="Saving..." type="submit">Save translation</.button>
+        </:actions>
+      </.simple_form>
     </div>
   </div>
 </div>

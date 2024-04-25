@@ -1,6 +1,6 @@
 defmodule JumpstartWeb.Translate.TranslationsLive do
-  alias Jumpstart.Translate
-  alias Jumpstart.Translate.{Phrase, Translation}
+  alias Jumpstart.{Repo, Translate}
+  alias Jumpstart.Translate.Phrase
 
   use JumpstartWeb, :live_view
 
@@ -11,7 +11,7 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
       socket
       |> assign(:locales, locales)
       # TODO: Get translations for the namespace
-      |> stream(:translations, [])
+      |> stream(:phrases, [])
 
     {:ok, socket}
   end
@@ -27,9 +27,28 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
     {:noreply, socket}
   end
 
-  def handle_event("add_translation", _params, socket) do
-    # Create a changeset for a phrase with each of the locales as a translation
-    # Convert to form data
-    {:noreply, socket}
+  def handle_event("add_phrase", _params, socket) do
+    form =
+      Translate.init_phrase(socket.assigns.namespace, socket.assigns.locales)
+      |> to_form(id: generate_id())
+
+    {:noreply, stream_insert(socket, :phrases, form)}
+  end
+
+  def handle_event("save", %{"dom-id" => dom_id, "phrase" => phrase_params}, socket) do
+    changeset =
+      Translate.init_phrase(socket.assigns.namespace, socket.assigns.locales, phrase_params)
+
+    case Repo.insert(changeset) do
+      {:ok, phrase} ->
+        {:noreply, put_flash(socket, :info, "Translations saved")}
+
+      {:error, changeset} ->
+        {:noreply, stream_insert(socket, :phrases, to_form(changeset, id: dom_id))}
+    end
+  end
+
+  defp generate_id() do
+    :crypto.strong_rand_bytes(8) |> Base.encode16()
   end
 end
