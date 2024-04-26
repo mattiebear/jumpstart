@@ -26,6 +26,7 @@
       id={dom_id}
     >
       <.simple_form for={form} phx-submit="save" phx-value-dom-id={dom_id} autocomplete="off">
+        <.input type="hidden" field={form[:id]} />
         <.input field={form[:key]} label="Key" placeholder="t.access.key" />
         <.input field={form[:notes]} label="Notes" type="textarea" />
 
