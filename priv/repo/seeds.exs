@@ -21,9 +21,9 @@ account =
 
 {:ok, project} = Projects.create_project_on_account(account.id, %{name: "My Project"})
 
-Translate.create_locale_on_project(project.id, %{code: "en", name: "English", source: true})
-Translate.create_locale_on_project(project.id, %{code: "es", name: "Spanish", source: false})
-Translate.create_locale_on_project(project.id, %{code: "fr", name: "French", source: false})
+Translate.create_locale_on_project(project.id, %{code: "en", name: "English", is_source: true})
+Translate.create_locale_on_project(project.id, %{code: "es", name: "Spanish", is_source: false})
+Translate.create_locale_on_project(project.id, %{code: "fr", name: "French", is_source: false})
 
 %User{}
 |> User.registration_changeset(%{

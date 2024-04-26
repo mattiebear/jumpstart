@@ -26,10 +26,11 @@
       id={dom_id}
     >
       <.simple_form for={form} phx-submit="save" phx-value-dom-id={dom_id} autocomplete="off">
-        <.input field={form[:key]} label="Key" placeholder="nested.component.key" />
+        <.input field={form[:key]} label="Key" placeholder="t.access.key" />
+
         <.input field={form[:notes]} label="Notes" type="textarea" />
 
-        <.inputs_for :let={translation} field={form[:translations]}>
+        <%!-- <.inputs_for :let={translation} field={form[:translations]}>
           <.input type="hidden" field={translation[:id]} />
           <% # TODO: Do this better %>
           <% locale = Enum.find(@locales, &(&1.id == translation.data.locale_id)) %>
@@ -40,7 +41,7 @@
             />
             <.input field={translation[:value]} class="mt-0" />
           </div>
-        </.inputs_for>
+        </.inputs_for> --%>
 
         <:actions>
           <.button phx-disable-with="Saving..." type="submit">Save translation</.button>

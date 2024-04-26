@@ -14,6 +14,11 @@ defmodule Jumpstart.Translate do
     |> Repo.all()
   end
 
+  def get_source_locale_for_project!(project_id) do
+    from(l in Locale, where: l.project_id == ^project_id and l.is_source == true)
+    |> Repo.one!()
+  end
+
   def create_locale_on_project(project_id, attrs) do
     %Locale{project_id: project_id}
     |> change_locale(attrs)
@@ -67,20 +72,8 @@ defmodule Jumpstart.Translate do
     Repo.get_by!(Namespace, project_id: project_id, name: name)
   end
 
-  def init_phrase(namespace, locales, attrs \\ %{}) do
-    %Phrase{}
-    |> change_phrase(attrs)
-    |> Ecto.Changeset.put_assoc(:namespace, namespace)
-    |> Ecto.Changeset.put_assoc(:translations, Enum.map(locales, &init_translation/1))
-  end
-
   def change_phrase(%Phrase{} = phrase, attrs \\ %{}) do
     Phrase.changeset(phrase, attrs)
-  end
-
-  def init_translation(locale) do
-    %Translation{locale_id: locale.id}
-    |> change_translation()
   end
 
   def change_translation(%Translation{} = translation, attrs \\ %{}) do
