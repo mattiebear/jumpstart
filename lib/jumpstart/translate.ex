@@ -83,6 +83,6 @@ defmodule Jumpstart.Translate do
   def list_phrases_for_namespace(namespace_id) do
     from(p in Phrase, where: p.namespace_id == ^namespace_id, order_by: [asc: :key])
     |> Repo.all()
-    |> Repo.preload(:translations)
+    |> Repo.preload(translations: [:locale])
   end
 end

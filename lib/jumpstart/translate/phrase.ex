@@ -25,4 +25,9 @@ defmodule Jumpstart.Translate.Phrase do
     |> cast_assoc(:translations, with: &Jumpstart.Translate.Translation.changeset/2)
     |> assoc_constraint(:namespace)
   end
+
+  def source(phrase) do
+    # TODO: Maybe preload here or pass in the source locale id
+    Enum.find(phrase.translations, & &1.locale.is_source)
+  end
 end
