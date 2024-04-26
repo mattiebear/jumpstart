@@ -23,5 +23,6 @@ defmodule Jumpstart.Translate.Phrase do
     )
     |> unique_constraint([:key, :namespace_id])
     |> cast_assoc(:translations, with: &Jumpstart.Translate.Translation.changeset/2)
+    |> assoc_constraint(:namespace)
   end
 end

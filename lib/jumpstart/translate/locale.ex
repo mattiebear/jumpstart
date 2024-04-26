@@ -18,5 +18,6 @@ defmodule Jumpstart.Translate.Locale do
     locale
     |> cast(attrs, [:code, :name, :is_source, :status])
     |> validate_required([:code, :name, :is_source])
+    |> assoc_constraint(:project)
   end
 end

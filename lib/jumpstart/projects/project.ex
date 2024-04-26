@@ -18,5 +18,6 @@ defmodule Jumpstart.Projects.Project do
     |> cast(attrs, [:name])
     |> cast_assoc(:locales, with: &Jumpstart.Translate.Locale.changeset/2)
     |> validate_required([:name])
+    |> assoc_constraint(:account)
   end
 end

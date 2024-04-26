@@ -16,5 +16,6 @@ defmodule Jumpstart.Translate.Namespace do
     |> cast(attrs, [:name])
     |> validate_required([:name])
     |> unique_constraint([:name, :project_id])
+    |> assoc_constraint(:project)
   end
 end

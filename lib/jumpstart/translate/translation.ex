@@ -14,7 +14,9 @@ defmodule Jumpstart.Translate.Translation do
 
   def changeset(translation, attrs) do
     translation
-    |> cast(attrs, [:value])
+    |> cast(attrs, [:value, :locale_id])
     |> unique_constraint([:locale_id, :phrase_id])
+    |> assoc_constraint(:locale)
+    |> assoc_constraint(:phrase)
   end
 end
