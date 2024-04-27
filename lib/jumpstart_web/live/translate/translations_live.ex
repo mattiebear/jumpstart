@@ -22,6 +22,7 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
 
   defp apply_action(socket, :index, _params) do
     socket
+    |> assign(:modal_title, nil)
     |> assign(:phrase, nil)
   end
 
@@ -32,11 +33,14 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
     }
 
     socket
+    |> assign(:modal_title, "Add new phrase")
     |> assign(:phrase, phrase)
   end
 
   defp apply_action(socket, :edit, %{"phrase_id" => id}) do
     socket
+    |> assign(:modal_title, "Edit phrase")
+
     # |> assign(:page_title, "Edit Thing")
     # |> assign(:thing, Stuff.get_thing!(id))
   end
