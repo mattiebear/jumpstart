@@ -14,14 +14,12 @@
       </button>
     </div>
 
-    <button
+    <.link
+      patch={~p"/translate/namespaces/#{@namespace.name}/new"}
       class="px-4 py-3 rounded-xl flex justify-center items-center border border-solid border-yellow-300 text-yellow-300 hover:border-yellow-400 hover:text-yellow-400 transition-colors duration-200 ease-in-out"
-      id="add_phrase_button"
-      phx-click="add_phrase"
-      type="button"
     >
       <.icon name="hero-plus-circle" class="mr-2" /> Add translation key
-    </button>
+    </.link>
   </div>
 
   <div id="phrases" phx-update="stream" class="flex flex-col gap-y-4">
@@ -67,3 +65,19 @@
     </div>
   </div> --%>
 </div>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="phrase-modal"
+  show
+  on_cancel={JS.patch(~p"/translate/namespaces/#{@namespace.name}")}
+>
+  <%!-- <.live_component
+    module={JumpstartWeb.Translate.LocaleFormComponent}
+    id={@locale.id || :new}
+    action={@action}
+    locale={@locale}
+    title={@modal_title}
+    project={@current_project}
+  /> --%>
+</.modal>

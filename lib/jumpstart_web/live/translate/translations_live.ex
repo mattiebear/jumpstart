@@ -1,16 +1,47 @@
 defmodule JumpstartWeb.Translate.TranslationsLive do
   alias Jumpstart.{Repo, Translate}
-  alias Jumpstart.Translate.Phrase
+  alias Jumpstart.Translate.{Phrase, Translation}
 
   use JumpstartWeb, :live_view
 
   def mount(_params, _session, socket) do
     locales = Translate.list_locales_for_project(socket.assigns.current_project.id)
 
-    {:ok, assign(socket, :locales, locales)}
+    {:ok, assign(socket, %{locales: locales, action: :index})}
   end
 
-  def handle_params(%{"id" => name}, url, socket) do
+  def handle_params(params, url, socket) do
+    socket =
+      socket
+      |> assign_navigation(url)
+      |> assign_translations(params)
+      |> apply_action(socket.assigns.live_action, params)
+
+    {:noreply, socket}
+  end
+
+  defp apply_action(socket, :index, _params) do
+    socket
+    |> assign(:phrase, nil)
+  end
+
+  defp apply_action(socket, :new, _params) do
+    phrase = %Phrase{
+      translations:
+        Enum.map(socket.assigns.locales, fn locale -> %Translation{locale_id: locale.id} end)
+    }
+
+    socket
+    |> assign(:phrase, phrase)
+  end
+
+  defp apply_action(socket, :edit, %{"phrase_id" => id}) do
+    socket
+    # |> assign(:page_title, "Edit Thing")
+    # |> assign(:thing, Stuff.get_thing!(id))
+  end
+
+  defp assign_translations(socket, %{"namespace_id" => name} = params) do
     namespace = Translate.get_namespace_by_name!(socket.assigns.current_project.id, name)
     phrases = Translate.list_phrases_for_namespace(namespace.id)
 
@@ -23,15 +54,9 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
         }
       end)
 
-    # forms = Enum.map(phrases, &Translate.change_phrase/1) |> Enum.map(&to_form/1)
-
-    socket =
-      socket
-      |> assign_navigation(url)
-      |> assign(:namespace, namespace)
-      |> stream(:phrases, data)
-
-    {:noreply, socket}
+    socket
+    |> assign(:namespace, namespace)
+    |> stream(:phrases, data)
   end
 
   # def handle_event("add_phrase", _params, socket) do
