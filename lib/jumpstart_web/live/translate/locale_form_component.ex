@@ -71,7 +71,7 @@ defmodule JumpstartWeb.Translate.LocaleFormComponent do
   end
 
   @impl true
-  def handle_event("save", %{"locale" => params}, socket) do
+  def handle_event("save", %{"phrase" => params}, socket) do
     save_locale(socket, socket.assigns.action, params)
   end
 
@@ -106,12 +106,5 @@ defmodule JumpstartWeb.Translate.LocaleFormComponent do
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
     assign(socket, :form, to_form(changeset))
-  end
-
-  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
-
-  defp put_flash!(socket, type, message) do
-    send(self(), {:put_flash, type, message})
-    socket
   end
 end

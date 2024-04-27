@@ -95,11 +95,4 @@ defmodule JumpstartWeb.Translate.NamespaceFormComponent do
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
     assign(socket, :form, to_form(changeset))
   end
-
-  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
-
-  defp put_flash!(socket, type, message) do
-    send(self(), {:put_flash, type, message})
-    socket
-  end
 end

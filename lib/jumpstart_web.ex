@@ -69,6 +69,13 @@ defmodule JumpstartWeb do
     quote do
       use Phoenix.LiveComponent
 
+      defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+      defp put_flash!(socket, type, message) do
+        send(self(), {:put_flash, type, message})
+        socket
+      end
+
       unquote(html_helpers())
     end
   end
