@@ -24,11 +24,33 @@ defmodule JumpstartWeb.Translate.PhraseFormComponent do
           <.input type="textarea" field={@form[:notes]} label="Notes" phx-debounce />
 
           <.inputs_for :let={translation} field={@form[:translations]}>
-            <.input field={translation[:id]} type="hidden" />
-            <.input field={translation[:locale_id]} type="hidden" />
+            <div>
+              <.input field={translation[:id]} type="hidden" />
+              <.input field={translation[:locale_id]} type="hidden" />
 
-            <div class="flex gap-x-2 w-full">
+              <% locale = Enum.find(@locales, &(&1.id == translation[:locale_id].value)) %>
+
+              <div class={"#{if locale.is_source, do: "border-purple-500", else: "border-zinc-800"} border border-solid rounded-xl p-2 flex gap-x-2 items-center"}>
+                <img
+                  src={"https://unpkg.com/language-icons/icons/#{locale.code}.svg"}
+                  class="w-8 h-8 rounded-full"
+                />
+
+                <%= if locale.is_source do %>
+                  <div class="inline-block border border-solid border-green-500 text-green-500 rounded-full px-4">
+                    Source
+                  </div>
+                <% end %>
+
+                <input
+                  class="flex-1 rounded-lg sm:text-sm py-1 px-2"
+                  placeholder={"#{locale.name} translation"}
+                />
+              </div>
+
+              <%!-- <div class="flex gap-x-2 w-full">
               <.input field={translation[:value]} class="w-full" phx-debounce />
+            </div> --%>
             </div>
           </.inputs_for>
         </fieldset>
