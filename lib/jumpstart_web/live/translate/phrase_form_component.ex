@@ -99,17 +99,22 @@ defmodule JumpstartWeb.Translate.PhraseFormComponent do
     save_phrase(socket, socket.assigns.action, params)
   end
 
-  # defp save_phrase(socket, :edit, params) do
-  #   case Translate.update_namespace(socket.assigns.namespace, params) do
-  #     {:ok, namespace} ->
-  #       notify_parent({:saved, namespace})
+  defp save_phrase(socket, :edit, params) do
+    case Translate.update_phrase(socket.assigns.phrase, params) do
+      {:ok, phrase} ->
+        notify_parent({:saved, phrase})
 
-  #       {:noreply, put_flash!(socket, :info, "Namespace updated successfully")}
+        socket =
+          socket
+          |> push_patch(to: socket.assigns.patch)
+          |> put_flash!(:info, "Phrase udpated successfully.")
 
-  #     {:error, %Ecto.Changeset{} = changeset} ->
-  #       {:noreply, assign_form(socket, changeset)}
-  #   end
-  # end
+        {:noreply, socket}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign_form(socket, changeset)}
+    end
+  end
 
   defp save_phrase(socket, :new, params) do
     changeset =
@@ -129,8 +134,7 @@ defmodule JumpstartWeb.Translate.PhraseFormComponent do
         {:noreply, socket}
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        form = to_form(changeset)
-        {:noreply, assign(socket, form: form)}
+        {:noreply, assign_form(socket, changeset)}
     end
   end
 

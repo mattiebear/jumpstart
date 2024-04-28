@@ -85,4 +85,14 @@ defmodule Jumpstart.Translate do
     |> Repo.all()
     |> Repo.preload(translations: [:locale])
   end
+
+  def get_phrase!(id) do
+    Repo.get!(Phrase, id) |> Repo.preload(:translations)
+  end
+
+  def update_phrase(%Phrase{} = phrase, attrs) do
+    phrase
+    |> change_phrase(attrs)
+    |> Repo.update()
+  end
 end

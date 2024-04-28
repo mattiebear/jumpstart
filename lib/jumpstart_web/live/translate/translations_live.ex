@@ -47,25 +47,28 @@ defmodule JumpstartWeb.Translate.TranslationsLive do
   end
 
   defp apply_action(socket, :edit, %{"phrase_id" => id}) do
+    phrase = Translate.get_phrase!(id)
+
     socket
     |> assign(:modal_title, "Edit phrase")
+    |> assign(:phrase, phrase)
   end
 
-  defp assign_translations(socket, %{"namespace_id" => name} = params) do
+  defp assign_translations(socket, %{"namespace_id" => name}) do
     namespace = Translate.get_namespace_by_name!(socket.assigns.current_project.id, name)
     phrases = Translate.list_phrases_for_namespace(namespace.id)
-
-    data =
-      Enum.map(phrases, fn phrase ->
-        %{
-          id: phrase.id,
-          phrase: phrase,
-          source: Phrase.source(phrase)
-        }
-      end)
+    data = Enum.map(phrases, &build_phrase_map/1)
 
     socket
     |> assign(:namespace, namespace)
     |> stream(:phrases, data)
+  end
+
+  defp build_phrase_map(phrase) do
+    %{
+      id: phrase.id,
+      phrase: phrase,
+      source: Phrase.source(phrase)
+    }
   end
 end
