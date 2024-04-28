@@ -56,6 +56,7 @@ defmodule JumpstartWeb do
       use Phoenix.LiveView,
         layout: {JumpstartWeb.Layouts, :app}
 
+      # TODO: Move this to an external module and import it
       # Allows for flash messages to be created from Live Components
       def handle_info({:put_flash, type, message}, socket) do
         {:noreply, Phoenix.LiveView.put_flash(socket, type, message)}
@@ -69,6 +70,7 @@ defmodule JumpstartWeb do
     quote do
       use Phoenix.LiveComponent
 
+      # TODO: Move this to an external module and import it
       defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 
       defp put_flash!(socket, type, message) do
