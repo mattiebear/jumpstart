@@ -23,4 +23,17 @@ defmodule Jumpstart.ProjectsFixtures do
 
     project
   end
+
+  def project_on_account_fixture(account_id, attrs \\ %{}) do
+    attrs =
+      attrs
+      |> Enum.into(%{
+        name: "some name"
+      })
+
+    {:ok, project} =
+      Jumpstart.Projects.create_project_on_account(account_id, attrs)
+
+    project
+  end
 end
