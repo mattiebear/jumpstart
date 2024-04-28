@@ -76,10 +76,10 @@
     module={JumpstartWeb.Translate.PhraseFormComponent}
     id={@phrase.id || :new}
     action={@live_action}
+    locales={@locales}
+    namespace={@namespace}
+    patch={~p"/translate/namespaces/#{@namespace.name}"}
     phrase={@phrase}
     title={@modal_title}
-    namespace={@namespace}
-    locales={@locales}
-    patch={~p"/translate/namespaces/#{@namespace.name}"}
   />
 </.modal>

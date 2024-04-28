@@ -95,8 +95,8 @@ defmodule JumpstartWeb.Translate.PhraseFormComponent do
   end
 
   @impl true
-  def handle_event("save", %{"namespace" => params}, socket) do
-    save_phrase(socket, socket.assigns.live_action, params)
+  def handle_event("save", %{"phrase" => params}, socket) do
+    save_phrase(socket, socket.assigns.action, params)
   end
 
   # defp save_phrase(socket, :edit, params) do
@@ -115,7 +115,7 @@ defmodule JumpstartWeb.Translate.PhraseFormComponent do
     changeset =
       %Phrase{}
       |> Translate.change_phrase(params)
-      |> Changeset.put_assoc(:project, socket.assigns.project)
+      |> Changeset.put_assoc(:namespace, socket.assigns.namespace)
 
     case Repo.insert(changeset) do
       {:ok, phrase} ->
