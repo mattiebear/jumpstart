@@ -100,7 +100,7 @@ defmodule JumpstartWeb.Auth.UserSettingsLive do
       |> assign(:password_form, to_form(password_changeset))
       |> assign(:trigger_submit, false)
 
-    {:ok, socket}
+    {:ok, socket, layout: false}
   end
 
   def handle_event("validate_email", params, socket) do
