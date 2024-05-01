@@ -9,15 +9,23 @@ defmodule JumpstartWeb.Translate.NamespacesLive do
     socket =
       socket
       |> stream_namespaces()
-      |> assign(%{namespace: nil, action: :index})
+      |> assign(:namespace, nil)
+      |> assign(:uploaded_files, [])
+      |> allow_upload(:files, accept: ~w(.json))
 
     {:ok, socket}
   end
 
   def handle_params(_params, url, socket) do
-    {:noreply, assign_navigation(socket, url)}
+    socket =
+      socket
+      |> assign_navigation(url)
+      |> assign(:action, socket.assigns.live_action || :index)
+
+    {:noreply, socket}
   end
 
+  # TODO: Change to use /new path
   def handle_event("add_namespace", _params, socket) do
     {:noreply,
      assign(socket, %{
@@ -29,6 +37,30 @@ defmodule JumpstartWeb.Translate.NamespacesLive do
 
   def handle_event("close_modal", _params, socket) do
     {:noreply, assign(socket, %{namespace: nil, action: :index})}
+  end
+
+  def handle_event("save", _params, socket) do
+    uploaded_files =
+      consume_uploaded_entries(socket, :files, fn %{path: path}, _entry ->
+        dest =
+          Path.join(Application.app_dir(:jumpstart, "priv/static/uploads"), Path.basename(path))
+
+        # You will need to create `priv/static/uploads` for `File.cp!/2` to work.
+        File.cp!(path, dest)
+        {:ok, "/uploads/#{Path.basename(dest)}"}
+      end)
+
+    IO.inspect(uploaded_files)
+
+    {:noreply, Phoenix.Component.update(socket, :uploaded_files, &(&1 ++ uploaded_files))}
+  end
+
+  def handle_event("validate", _params, socket) do
+    {:noreply, socket}
+  end
+
+  def handle_event("cancel-upload", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :files, ref)}
   end
 
   def handle_info({JumpstartWeb.Translate.NamespaceFormComponent, {:saved, namespace}}, socket) do
@@ -44,4 +76,8 @@ defmodule JumpstartWeb.Translate.NamespacesLive do
     namespaces = Translate.list_namespaces_for_project(socket.assigns.current_project.id)
     stream(socket, :namespaces, namespaces)
   end
+
+  defp error_to_string(:too_large), do: "Too large"
+  defp error_to_string(:not_accepted), do: "You have selected an unacceptable file type"
+  defp error_to_string(:too_many_files), do: "You have selected too many files"
 end

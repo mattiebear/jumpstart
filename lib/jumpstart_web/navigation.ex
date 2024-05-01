@@ -1,4 +1,5 @@
 defmodule JumpstartWeb.Navigation do
+  # TODO: Get to to work through the conn instead of a socket
   def assign_navigation(socket, url) do
     Phoenix.Component.assign(socket, :navigation, build_navigation(url))
   end

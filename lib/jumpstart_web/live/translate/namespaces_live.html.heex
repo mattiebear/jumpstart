@@ -1,10 +1,14 @@
-<div class="container">
-  <.header>
-    Namespaces
-    <:subtitle>Each namespace represents a single translation file</:subtitle>
-  </.header>
+<div class="max-w-6xl m-auto">
+  <div class="flex justify-end gap-x-6 mb-4">
+    <.link
+      patch="/translate/namespaces/upload"
+      class="px-4 py-3 rounded-xl flex justify-center items-center border border-solid border-yellow-300 text-yellow-300 hover:border-yellow-400 hover:text-yellow-400 transition-colors duration-200 ease-in-out"
+    >
+      <.icon name="hero-plus-circle" class="mr-2" /> Upload translation files
+    </.link>
+  </div>
 
-  <div id="namespaces" phx-update="stream" class="grid gap-4 grid-cols-4 my-2">
+  <div id="namespaces" phx-update="stream" class="grid gap-4 grid-cols-3 my-2">
     <.link
       :for={{dom_id, namespace} <- @streams.namespaces}
       id={dom_id}
@@ -51,4 +55,42 @@
     title={@modal_title}
     project={@current_project}
   />
+</.modal>
+
+<.modal
+  :if={@action == :upload}
+  id="upload-modal"
+  show
+  on_cancel={JS.patch(~p"/translate/namespaces")}
+>
+  <form id="upload-form" phx-submit="save" phx-change="validate">
+    <.live_file_input upload={@uploads.files} />
+    <button type="submit">Upload</button>
+  </form>
+
+  <section phx-drop-target={@uploads.files.ref}>
+    <%= for entry <- @uploads.files.entries do %>
+      <article class="upload-entry">
+        <figure>
+          <.live_img_preview entry={entry} />
+          <figcaption><%= entry.client_name %></figcaption>
+        </figure>
+
+        <progress value={entry.progress} max="100"><%= entry.progress %>%</progress>
+
+        <button
+          type="button"
+          phx-click="cancel-upload"
+          phx-value-ref={entry.ref}
+          aria-label="cancel"
+        >
+          &times;
+        </button>
+      </article>
+    <% end %>
+
+    <%= for err <- upload_errors(@uploads.files) do %>
+      <p class="alert alert-danger"><%= error_to_string(err) %></p>
+    <% end %>
+  </section>
 </.modal>

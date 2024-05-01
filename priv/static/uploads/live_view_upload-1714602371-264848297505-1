@@ -1,0 +1,12 @@
+{
+  "header": "A header for a cool app",
+  "footer": "A footer for a cool app",
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "home": {
+    "content": "This is the home page content updated"
+  }
+}
