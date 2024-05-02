@@ -40,6 +40,7 @@ defmodule JumpstartWeb.Translate.NamespacesLive do
   end
 
   def handle_event("save", _params, socket) do
+    # Since these are text, let's just make an upload schema
     uploaded_files =
       consume_uploaded_entries(socket, :files, fn %{path: path}, _entry ->
         dest =
