@@ -7,6 +7,8 @@ defmodule Jumpstart.Translate.Namespace do
 
     belongs_to :project, Jumpstart.Projects.Project
 
+    has_many :phrases, Jumpstart.Translate.Phrase
+
     timestamps(type: :utc_datetime)
   end
 

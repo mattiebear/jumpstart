@@ -10,7 +10,6 @@ defmodule JumpstartWeb.Translate.NamespacesLive do
       socket
       |> stream_namespaces()
       |> assign(:namespace, nil)
-      |> assign(:uploaded_files, [])
       |> allow_upload(:files, accept: ~w(.json))
 
     {:ok, socket}
@@ -40,20 +39,16 @@ defmodule JumpstartWeb.Translate.NamespacesLive do
   end
 
   def handle_event("save", _params, socket) do
-    # Since these are text, let's just make an upload schema
-    uploaded_files =
-      consume_uploaded_entries(socket, :files, fn %{path: path}, _entry ->
-        dest =
-          Path.join(Application.app_dir(:jumpstart, "priv/static/uploads"), Path.basename(path))
+    # TODO: Update to use job instead of handling here
+    consume_uploaded_entries(socket, :files, fn %{path: path}, entry ->
+      {entry.client_name, path}
 
-        # You will need to create `priv/static/uploads` for `File.cp!/2` to work.
-        File.cp!(path, dest)
-        {:ok, "/uploads/#{Path.basename(dest)}"}
-      end)
+      dest = Path.join("priv/static/uploads", Path.basename(path))
+      File.cp!(path, dest)
+      {:ok, Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")}
+    end)
 
-    IO.inspect(uploaded_files)
-
-    {:noreply, Phoenix.Component.update(socket, :uploaded_files, &(&1 ++ uploaded_files))}
+    {:noreply, socket}
   end
 
   def handle_event("validate", _params, socket) do
